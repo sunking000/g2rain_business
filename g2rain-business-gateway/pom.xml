@@ -1,0 +1,153 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.baiwang.sunking000</groupId>
+  <artifactId>g2rain-business-gateway</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>business-base-gateway</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <parent>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-parent</artifactId>
+	<version>2.1.0.RELEASE</version>
+	<relativePath/>
+  </parent>
+  
+  <dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-dependencies</artifactId>
+			<version>Greenwich.SR1</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+	</dependencies>
+</dependencyManagement>
+
+  <dependencies>
+    <dependency>
+		<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-gateway</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>commons-lang</groupId>
+	    <artifactId>commons-lang</artifactId>
+	    <version>2.6</version>
+	</dependency>
+	<dependency>
+	    <groupId>commons-collections</groupId>
+	    <artifactId>commons-collections</artifactId>
+	    <version>3.2.2</version>
+	</dependency>
+	<dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+	</dependency>
+	<dependency>
+	   <groupId>com.github.pagehelper</groupId>
+	   <artifactId>pagehelper-spring-boot-starter</artifactId>
+	   <version>1.2.3</version>
+	</dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+    </dependency>
+	<dependency>
+	    <groupId>org.freemarker</groupId>
+	    <artifactId>freemarker</artifactId>
+	</dependency>
+	<dependency>
+	  <groupId>org.projectlombok</groupId>
+	  <artifactId>lombok</artifactId>
+  	</dependency>
+  	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-api</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>commons-codec</groupId>
+	    <artifactId>commons-codec</artifactId>
+	</dependency>
+	<dependency>
+	  <groupId>org.springframework.cloud</groupId>
+	  <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+	</dependency>
+	<dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+    <dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>
+	    <version>28.0-jre</version>
+	</dependency>
+  </dependencies>
+  
+   <profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<env>dev</env>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>release</id>
+			<properties>
+				<env>release</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>docker</id>
+			<properties>
+				<env>docker</env>
+			</properties>
+		</profile>
+	</profiles>
+	
+	<build>
+		<finalName>business-base-gateway</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+			<!-- 针对打包任务 使用描述符构建发布包 mvn assembly:assembly -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>

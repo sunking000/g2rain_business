@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.sunking000.business.base.core.mapper.OrganMapper">
+	<insert id="insert" parameterType="OrganPo">
+		insert into ORGAN(ID, CREATE_TIME, UPDATE_TIME, VERSION, ORGAN_ID, 
+				TYPE,  NAME,
+				ADMIN, OUT_ORGAN_ID, CITY_CODE, LONGITUDE, LATITUDE, ADDRESS,
+				STATUS
+			) values (0, now(), now(), 0, #{organId},
+				#{type},  #{name}, 
+				#{admin}, #{outOrganId}, #{cityCode}, #{latitude}, #{longitude}, #{address},
+				#{status}			
+			)
+	</insert>
+
+	<sql id="selectBaseSql">
+		<where>
+			DELETE_FLAG = false
+			<if test="organIdList != null">
+				and ORGAN_ID in 
+				<foreach collection="organIdList" open="(" close=")" item="item" separator=",">
+					#{item}
+				</foreach>
+			</if>
+			<if test="type != null and type != ''">
+				and TYPE = #{type}
+			</if>
+			<if test="admin != null">
+				and ADMIN = #{admin}
+			</if>
+			<if test="cityCode != null and cityCode != ''">
+				and CITY_CODE = #{cityCode}
+			</if>
+			<if test="organId != null and organId != ''">
+				and ORGAN_ID = #{organId}
+			</if>
+			<if test="name != null and name != ''">
+				and NAME = #{name}
+			</if>
+			<if test="status != null and status != ''">
+				and STATUS = #{status}
+			</if>
+			<if test="outOrganId != null and outOrganId != ''">
+				and OUT_ORGAN_ID = #{outOrganId}
+			</if>
+			<if test="namePattern != null and namePattern != ''">
+				and NAME LIKE  #{namePattern}
+			</if>
+			<if test="startTime != null and startTime != ''">
+				and CREATE_TIME >= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				<![CDATA[
+					and CREATE_TIME <=  #{endTime}
+				]]>  
+			</if>
+		</where>
+	</sql>	
+		
+	<select id="countByParam" resultType="java.lang.Integer" parameterType="OrganSelectParam">
+		select count(*) from ORGAN
+        <include refid="selectBaseSql"></include>
+	</select>
+	
+	
+	<select id="selectByParam" parameterType="OrganSelectParam" resultType="OrganPo">
+		select * from ORGAN
+			<include refid="selectBaseSql"></include>
+			order by id desc
+	</select>
+	
+	<select id="get" resultType="OrganPo">
+		select * from ORGAN
+			where ORGAN_ID = #{organId}
+	</select>
+	
+	<update id="update">
+		update ORGAN
+			<set>
+					UPDATE_TIME = now(),
+					VERSION = VERSION + 1,
+				<if test="type != null">
+					TYPE = #{type},
+				</if>
+				<if test="name != null">
+					NAME = #{name},
+				</if>
+				<if test="organId != null">
+					ORGAN_ID = #{organId},
+				</if>
+				<if test="outOrganId != null">
+					OUT_ORGAN_ID = #{outOrganId},
+				</if>
+				<if test="cityCode != null">
+					CITY_CODE = #{cityCode},
+				</if>
+				<if test="latitude != null">
+					LATITUDE = #{latitude},
+				</if>
+				<if test="longitude != null">
+					LONGITUDE = #{longitude},
+				</if>
+				<if test="address != null">
+					ADDRESS = #{address},
+				</if>
+				<if test="status != null">
+					STATUS = #{status},
+				</if>
+				<if test="admin != null">
+					ADMIN = #{admin}, 
+				</if>
+			</set>
+			where ID = #{id}
+			and VERSION = #{version}
+	</update>
+</mapper>

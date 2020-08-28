@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.sunking000.business.base.core.mapper.OrganMembershipMapper">
+	<sql id="selectBaseSql">
+		<where>
+			DELETE_FLAG = false
+			<if test="keyIds != null">
+				and PARENT_ORGAN_ID in 
+				<foreach collection="keyIds" open="(" close=")" item="item" separator=",">
+					#{item}
+				</foreach>
+			</if>
+			<if test="parentOrganId != null and parentOrganId != ''">
+				and PARENT_ORGAN_ID = #{parentOrganId}
+			</if>
+			<if test="childOrganId != null and childOrganId != ''">
+				and CHILD_ORGAN_ID = #{childOrganId}
+			</if>
+			<if test="childOrganType != null and childOrganType != ''">
+				and CHILD_ORGAN_TYPE = #{childOrganType}
+			</if>
+		</where>
+	</sql>	
+		
+	<select id="countByParam" resultType="java.lang.Integer" parameterType="OrganMembershipSelectParam">
+		select count(*) from ORGAN_MEMBERSHIP
+        <include refid="selectBaseSql"></include>
+	</select>
+	
+	
+	<select id="selectByParam" parameterType="OrganMembershipSelectParam" resultType="OrganMembershipPo">
+		select * from ORGAN_MEMBERSHIP
+			<include refid="selectBaseSql"></include>
+			order by id desc
+	</select>
+</mapper>

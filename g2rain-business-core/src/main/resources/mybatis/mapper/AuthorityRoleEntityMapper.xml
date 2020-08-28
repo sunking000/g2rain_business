@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.sunking000.business.base.core.mapper.AuthorityRoleEntityMapper">
+
+	<select id="selectByParam" parameterType="AuthorityRoleEntitySelectParam" resultType="AuthorityRoleEntityPo">
+		select * from AUTHORITY_ROLE_ENTITY
+			<where>
+				delete_flag = false
+				<if test="entityId != null  and entityId != ''">
+					and	ENTITY_ID = #{entityId}
+				</if>
+				<if test="entityType != null and entityType != ''">
+					and	ENTITY_TYPE = #{entityType}
+				</if>
+				<if test="roleId != null and roleId != ''">
+					and ROLE_ID = #{roleId}
+				</if>
+				<if test="organId != null and organId != ''">
+					and ORGAN_ID = #{organId}
+				</if>
+			</where>
+	</select>
+	
+	<update id="deleteBatch">
+		update AUTHORITY_ROLE_ENTITY
+			set DELETE_FLAG = true
+			where ROLE_ID = #{roleId}
+			and 
+			<foreach collection="entityIds" item="item" open="(" close=")" separator="or">
+				ENTITY_ID = #{item}
+			</foreach>
+	</update>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into AUTHORITY_ROLE_ENTITY(
+				ID, CREATE_TIME, UPDATE_TIME, VERSION, ROLE_ID, 
+					ORGAN_ID, ENTITY_ID, ENTITY_TYPE
+			) values 
+			<foreach collection="roleEntitys" item="item" index="index" separator="," >  
+		        (
+		        	0, now(), now(), 0, #{item.roleId},
+		        	#{item.organId}, #{item.entityId}, #{item.entityType}
+		        )  
+		    </foreach> 
+	</insert>
+</mapper>

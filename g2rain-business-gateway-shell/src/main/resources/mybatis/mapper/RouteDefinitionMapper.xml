@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.sunking000.business.base.gateway.shell.mapper.RouteDefinitionMapper">
+
+	<update id="update" parameterType="RouteDefinitionPo">
+		update ROUTE_DEFINITION
+			<set>
+				VERSION = VERSION + 1,
+				UPDATE_TIME = now(),
+				<if test="name != null">
+					NAME = #{name},
+				</if>
+				<if test="method != null">
+					METHOD = #{method},
+				</if>
+				<if test="context != null">
+					CONTEXT = #{context},
+				</if>
+				<if test="path != null">
+					PATH = #{path},
+				</if>
+				<if test="headerParameters != null">
+					HEADER_PARAMETERS = #{headerParameters},
+				</if>
+				<if test="endpointPath != null">
+					ENDPOINT_PATH = #{endpointPath},
+				</if>
+				<if test="endpointHost != null">
+					ENDPOINT_HOST = #{endpointHost},
+				</if>
+				<if test="description != null">
+					DESCRIPTION = #{description},
+				</if>
+			</set>
+			where ROUTE_DEFINITION_ID = #{routeDefinitionId}
+	</update>
+	
+	<sql id="selectWhereSql">
+		<where>
+			delete_flag = false
+			<if test="routeDefinitionId != null and routeDefinitionId != ''">
+				and	ROUTE_DEFINITION_ID = #{routeDefinitionId}
+			</if>
+			<if test="name != null and name != ''">
+				and NAME = #{name}
+			</if>
+			<if test="endpointHost != null and endpointHost != ''">
+				and ENDPOINT_HOST = #{endpointHost}
+			</if>
+			<if test="context != null and context != ''">
+				and CONTEXT = #{context}
+			</if>
+			<if test="method != null and method != ''">
+				and METHOD = #{method}
+			</if>
+			<if test="appPath != null and appPath != ''">
+				and PATH = #{path}
+			</if>
+			<if test="endpointPath != null and endpointPath != ''">
+				and ENDPOINT_PATH = #{endpointPath}
+			</if>
+			<if test="keyIds != null">
+				and 
+				<foreach collection="keyIds" item="item" open="(" close=")" separator="or">
+					ROUTE_DEFINITION_ID = #{item}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+
+	<select id="selectByParam" parameterType="RouteDefinitionSelectParam" resultType="RouteDefinitionPo">
+		select * from ROUTE_DEFINITION
+			<include refid="selectWhereSql"></include>
+	</select>
+	
+	<select id="countByParam" parameterType="RouteDefinitionSelectParam" resultType="java.lang.Integer">
+		select count(*) from ROUTE_DEFINITION
+			<include refid="selectWhereSql"></include>
+	</select>
+</mapper>

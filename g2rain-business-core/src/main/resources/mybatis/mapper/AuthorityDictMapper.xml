@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.sunking000.business.base.core.mapper.AuthorityDictMapper">
+
+	<update id="update" parameterType="AuthorityDictPo">
+		update AUTHORITY_DICT
+			<set>
+				VERSION = VERSION + 1,
+				UPDATE_TIME = now(),
+				<if test="name != null">
+					NAME = #{name},
+				</if>
+				<if test="code != null">
+					CODE = #{code},
+				</if>
+				<if test="parentDictId != null">
+					PARENT_DICT_ID = #{parentDictId},
+				</if>
+				<if test="type != null">
+					TYPE = #{type},
+				</if>
+				<if test="pageCode != null">
+					PAGE_CODE = #{pageCode},
+				</if>
+			</set>
+			where DICT_ID = #{dictId}
+			and VERSION = #{version}
+	</update>
+
+	<select id="selectByParam" parameterType="AuthorityDictSelectParam" resultType="AuthorityDictPo">
+		select * from AUTHORITY_DICT
+			<where>
+				delete_flag = false
+				<if test="type != null and type != ''">
+					and	TYPE = #{type}
+				</if>
+				<if test="parentDictId != null and parentDictId != ''">
+					and	PARENT_DICT_ID = #{parentDictId}
+				</if>
+				<if test="code != null and code != ''">
+					and	CODE = #{code}
+				</if>
+				<if test="pageCode != null and pageCode != ''">
+					and PAGE_CODE = #{pageCode}
+				</if>
+			</where>
+			ORDER BY CREATE_TIME DESC
+	</select>
+	<select id="getByComplexParam" parameterType="String" resultType="AuthorityDictPo">
+		select * from AUTHORITY_DICT
+			<where>
+				<if test="dictId != null and dictId != ''">
+					and DICT_ID = #{dictId}
+				</if>
+				<if test="code != null and code != ''">
+					and	CODE = #{code}
+				</if>
+				<if test="pageCode != null and pageCode != ''">
+					and PAGE_CODE = #{pageCode}
+				</if>
+			</where>
+			ORDER BY CREATE_TIME DESC
+	</select>
+	<select id="selectByRoleDictParam" parameterType="AuthorityRoleDictSelectParam" resultType="AuthorityDictPo">
+		select ad.* from authority_dict ad, ( select PERMISSION_ID from AUTHORITY_PERMISSION_ROLE 
+				where PERMISSION_TYPE = 'DICT'
+				and	delete_flag = false
+				<if test="roleId != null and roleId != ''">
+					and ROLE_ID = #{roleId}
+				</if>
+				<if test="roleIds != null">
+					and 
+					<foreach collection="roleIds" item="item" open="(" close=")" separator="or">
+						ROLE_ID = #{item}
+					</foreach>
+				</if>
+			) apr
+			where ad.DICT_ID = apr.PERMISSION_ID
+			<if test="type != null  and type != ''">
+				and	ad.TYPE = #{type}
+			</if>
+			<if test="code != null and code != ''">
+				and	ad.CODE  = #{code}
+			</if>
+			<if test="pageCode != null and pageCode != ''">
+				and	ad.PAGE_CODE = #{pageCode}
+			</if>
+			<if test="parentDictId != null and parentDictId != ''">
+				and	ad.PARENT_DICT_ID = #{parentDictId}
+			</if>
+	</select>
+
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.sunking000.business.base.core.mapper.AuthorityLinkMapper">
+
+	<update id="update" parameterType="AuthorityLinkPo">
+		update AUTHORITY_LINK
+			<set>
+				VERSION = VERSION + 1,
+				UPDATE_TIME = now(),
+				SORT = #{sort},
+				<if test="name != null">
+					NAME = #{name},
+				</if>
+				<if test="code != null">
+					CODE = #{code},
+				</if>
+				<if test="linkPath != null">
+					LINK_PATH = #{linkPath},
+				</if>
+				<if test="type != null">
+					TYPE = #{type},
+				</if>
+				<if test="method != null">
+					METHOD = #{method},
+				</if>
+				<if test="parentLinkId != null">
+					PARENT_LINK_ID = #{parentLinkId},
+				</if>
+				<if test="icon != null">
+					ICON = #{icon},
+				</if>
+			</set>
+			where LINK_ID = #{linkId}
+			and VERSION = #{version}
+	</update>
+
+	<select id="selectByParam" parameterType="AuthorityLinkSelectParam" resultType="AuthorityLinkPo">
+		select * from AUTHORITY_LINK
+			<where>
+				delete_flag = false
+				<if test="linkId != null and linkId != ''">
+					and	LINK_ID = #{linkId}
+				</if>
+				<if test="type != null and type != ''">
+					and	TYPE = #{type}
+				</if>
+				<if test="method != null and method != ''">
+					and	METHOD = #{method}
+				</if>
+				<if test="linkPath != null and linkPath != ''">
+					and	LINK_PATH like concat('%',#{linkPath},'%')
+				</if>
+				<if test="parentLinkId != null and parentLinkId != ''">
+					and	PARENT_LINK_ID = #{parentLinkId}
+				</if>
+			</where>
+	</select>
+	
+	<select id="selectByAuthorityRoleLinkParam" parameterType="AuthorityRoleLinkSelectParam" resultType="AuthorityLinkPo">
+		select al.* from AUTHORITY_LINK al, ( select PERMISSION_ID from AUTHORITY_PERMISSION_ROLE 
+				where PERMISSION_TYPE = 'LINK'
+				and	delete_flag = false
+				<if test="roleId != null and roleId != ''">
+					and ROLE_ID = #{roleId}
+				</if>
+				<if test="roleIds != null">
+					and 
+					<foreach collection="roleIds" item="item" open="(" close=")" separator="or">
+						ROLE_ID = #{item}
+					</foreach>
+				</if>
+			) apr
+			where al.LINK_ID = apr.PERMISSION_ID
+			<if test="type != null  and type != ''">
+				and	al.TYPE = #{type}
+			</if>
+			<if test="method != null and method != ''">
+				and	al.METHOD = #{method}
+			</if>
+			<if test="linkPath != null and linkPath != ''">
+				and	al.LINK_PATH like concat('%',#{linkPath},'%')
+			</if>
+	</select>
+</mapper>

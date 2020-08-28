@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.sunking000.business.base.core.mapper.AuthorityRoleUserMapper">
+
+	<update id="deleteBatch">
+		update AUTHORITY_ROLE_USER
+			set DELETE_FLAG = true
+			where ROLE_ID = #{roleId}
+			and 
+			<foreach collection="deleteUserIds" item="item" open="(" close=")" separator="or">
+				USER_ID = #{item}
+			</foreach>
+	</update>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into AUTHORITY_ROLE_USER(
+				ID, CREATE_TIME, UPDATE_TIME, VERSION, ROLE_ID, 
+					ORGAN_ID, USER_ID
+			) values 
+			<foreach collection="roleUsers" item="item" index="index" separator="," >  
+		        (
+		        	0, now(), now(), 0, #{item.roleId},
+		        	#{item.organId}, #{item.userId}
+		        )  
+		    </foreach> 
+	</insert>
+
+	<select id="selectByParam" parameterType="AuthorityRoleUserSelectParam" resultType="AuthorityRoleUserPo">
+		select * from AUTHORITY_ROLE_USER
+			<where>
+				delete_flag = false
+				<if test="roleId != null and roleId != ''">
+					and ROLE_ID = #{roleId}
+				</if>
+				<if test="userId != null and userId != ''">
+					and USER_ID = #{userId}
+				</if>
+				<if test="companyOrganId != null and companyOrganId != ''">
+					and COMPANY_ORGAN_ID = #{companyOrganId}
+				</if>
+				<if test="organId != null and organId != ''">
+					and ORGAN_ID = #{organId}
+				</if>
+			</where>
+	</select>
+	
+	<select id="selectByRoleIdsAndUserId" resultType="AuthorityRoleUserPo">
+		select * from AUTHORITY_ROLE_USER
+			<where>
+				delete_flag = false
+				<if test="userId != null and userId != ''">
+					and USER_ID = #{userId}
+				</if>
+				<if test="userId == null or userId == ''">
+					and USER_ID = "#0#"
+				</if>
+				<if test="roleIds != null ">
+					and  
+					<foreach collection="roleIds" item="item" open="(" close=")" separator="or">
+						ROLE_ID = #{item}
+					</foreach>
+				</if>
+				<if test="roleIds == null">
+					<!-- userIds不存在时查询userId一个其他值，保证不能查询到数据 -->
+					and ROLE_ID = "#0#"
+				</if>
+			</where>
+	</select>
+</mapper>

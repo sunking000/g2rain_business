@@ -1,0 +1,34 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+		  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+	<id>dist</id>
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<directory>src/main/assembly/sbin</directory>
+			<outputDirectory>bin</outputDirectory>
+			<!-- 文件权限 rwxr-xr-x -->
+			<directoryMode>0755</directoryMode>
+			<fileMode>0755</fileMode>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+            <!-- 将scope为runtime的依赖包打包到lib目录下 -->
+            <outputDirectory>lib</outputDirectory>
+            <scope>runtime</scope>
+			<!-- 文件权限 rw_r__r__ -->
+			<fileMode>0644</fileMode>
+		</dependencySet>
+		<dependencySet>
+            <!-- 将scope为system的依赖包打包到lib目录下 -->
+            <outputDirectory>lib</outputDirectory>
+            <scope>system</scope>
+			<!-- 文件权限 rw_r__r__ -->
+			<fileMode>0644</fileMode>
+		</dependencySet>
+	</dependencySets>
+</assembly>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.sunking000.business.base.core.mapper.AuthorityPermissionRoleMapper">
+
+	<select id="selectByParam" parameterType="AuthorityPermissionRoleSelectParam" resultType="AuthorityPermissionRolePo">
+		select * from AUTHORITY_PERMISSION_ROLE
+			<where>
+				delete_flag = false
+				<if test="permissionId != null and permissionId != ''">
+					and	PERMISSION_ID = #{permissionId}
+				</if>
+				<if test="permissionType != null and permissionType != ''">
+					and	PERMISSION_TYPE = #{permissionType}
+				</if>
+				<if test="roleId != null and roleId != ''">
+					and ROLE_ID = #{roleId}
+				</if>
+				<if test="organId != null and organId != ''">
+					and ORGAN_ID = #{organId}
+				</if>
+				<if test="roleIds != null">
+					and 
+					<foreach collection="roleIds" item="item" open="(" close=")" separator="or">
+						ROLE_ID = #{item}
+					</foreach>
+				</if>
+			</where>
+	</select>
+	
+	<update id="deleteBatch">
+		update AUTHORITY_PERMISSION_ROLE
+			set DELETE_FLAG = true
+			where ROLE_ID = #{roleId}
+			and 
+			<foreach collection="permissionIds" item="item" open="(" close=")" separator="or">
+				PERMISSION_ID = #{item}
+			</foreach>
+	</update>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into AUTHORITY_PERMISSION_ROLE(
+				ID, CREATE_TIME, UPDATE_TIME, VERSION, ROLE_ID, PERMISSION_ID, 
+				PERMISSION_TYPE,  ORGAN_ID
+			) values 
+			<foreach collection="permissionRoles" item="item" index="index" separator="," >  
+		        (
+		        	0, now(), now(), 0, #{item.roleId},
+		        	#{item.permissionId}, #{item.permissionType}, #{item.organId}
+		        )  
+		    </foreach> 
+	</insert>
+</mapper>
