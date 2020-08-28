@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.github.sunking000.business.base.core.mapper.AuthorityRoleEntityMapper">
+<mapper namespace="com.g2rain.business.core.mapper.AuthorityRoleEntityMapper">
 
 	<select id="selectByParam" parameterType="AuthorityRoleEntitySelectParam" resultType="AuthorityRoleEntityPo">
 		select * from AUTHORITY_ROLE_ENTITY

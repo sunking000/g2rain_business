@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.baiwang.sunking000</groupId>
+  <groupId>com.g2rain.business</groupId>
   <artifactId>g2rain-business-gateway-shell</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -101,7 +101,7 @@
         <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
     <dependency>
-		  <groupId>com.github.sunking000</groupId>
+		  <groupId>com.g2rain.business</groupId>
 		  <artifactId>g2rain-business-common</artifactId>
 		  <version>0.1.1</version>
 	  </dependency>
