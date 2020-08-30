@@ -104,7 +104,7 @@
   </dependencies>
 	
 	<build>
-		<finalName>business-base-core</finalName>
+		<finalName>g2rain-business-core</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

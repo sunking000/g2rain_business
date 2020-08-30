@@ -108,7 +108,7 @@
   </dependencies>
   
   <build>
-		<finalName>business-base-gateway-shell</finalName>
+		<finalName>g2rain-business-gateway-shell</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

@@ -45,7 +45,7 @@
   </dependencies>
   
 	<build>
-		<finalName>business-base-registry-server</finalName>
+		<finalName>g2rain-business-registry-server</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
