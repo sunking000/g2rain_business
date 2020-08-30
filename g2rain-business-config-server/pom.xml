@@ -50,7 +50,7 @@
   </dependencies>
   
 	<build>
-		<finalName>business-base-config-server</finalName>
+		<finalName>g2rain-business-config-server</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
