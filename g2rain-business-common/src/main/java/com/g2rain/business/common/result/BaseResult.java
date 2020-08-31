@@ -10,7 +10,6 @@ import lombok.Setter;
  * @ClassName BaseResult
  * @Description 基础结果值
  *
- * @author sunhaojie sunhaojie@kingsoft.com
  * @date 2016年8月21日 下午8:13:49
  */
 @Getter

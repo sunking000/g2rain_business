@@ -21,7 +21,6 @@ import com.g2rain.business.common.utils.CommonContextContainer;
  * @ClassName ResetRequestResponseFilter
  * @Description 重置request的输入流
  *
- * @author sunhaojie sunhaojie@kingsoft.com
  * @date 2017年1月13日 下午11:57:14
  */
 public class ResetRequestResponseFilter implements Filter {

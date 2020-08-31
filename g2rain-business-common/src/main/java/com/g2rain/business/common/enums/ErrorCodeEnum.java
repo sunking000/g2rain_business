@@ -5,7 +5,6 @@ package com.g2rain.business.common.enums;
  * @ClassName ErrorCodeEnum
  * @Description 错误码枚举
  *
- * @author sunhaojie@kingsoft.com
  * @date 2017年7月25日 上午11:10:04
  */
 public enum ErrorCodeEnum {

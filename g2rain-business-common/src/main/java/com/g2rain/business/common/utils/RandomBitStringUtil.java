@@ -7,7 +7,6 @@ import java.util.UUID;
  * @ClassName RandomEightBitStringUtil
  * @Description 随机八位字符串
  *
- * @author sunhaojie@kingsoft.com
  * @date 2017年8月3日 下午7:10:25
  */
 public class RandomBitStringUtil {
@@ -58,7 +57,6 @@ public class RandomBitStringUtil {
      * @param count
      * @return String[]
      *
-     * @author sunhaojie@kingsoft.com
      * @date 2017年8月3日 下午7:13:06
      */
     public static String[] generateShortUuid(int count) {

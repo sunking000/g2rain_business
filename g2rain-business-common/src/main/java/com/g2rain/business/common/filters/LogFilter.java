@@ -28,7 +28,6 @@ import com.g2rain.business.common.utils.MediaTypeUtil;
  * @ClassName RequestLogFilter
  * @Description 请求响应入参出参日志打印
  *
- * @author sunhaojie@kingsoft.com
  * @date 2017年8月10日 上午11:45:03
  */
 public class LogFilter implements Filter {
