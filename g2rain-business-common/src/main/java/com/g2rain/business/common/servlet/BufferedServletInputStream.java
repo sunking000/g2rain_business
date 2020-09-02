@@ -11,7 +11,6 @@ import javax.servlet.ServletInputStream;
  * @ClassName BufferedServletInputStream
  * @Description 重置输入流
  *
- * @author sunhaojie sunhaojie@kingsoft.com
  * @date 2017年1月7日 下午3:31:57
  */
 public class BufferedServletInputStream extends ServletInputStream {

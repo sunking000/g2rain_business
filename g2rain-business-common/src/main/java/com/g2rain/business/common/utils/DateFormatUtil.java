@@ -18,7 +18,6 @@ import com.g2rain.business.common.exception.BussinessRuntimeException;
  * @ClassName DateFormatUtil
  * @Description 日期格式化工具类
  *
- * @author sunhaojie@kingsoft.com
  * @date 2017年8月1日 下午7:35:37
  */
 public class DateFormatUtil {
@@ -41,7 +40,6 @@ public class DateFormatUtil {
      * @param date
      * @return String
      *
-     * @author sunhaojie@kingsoft.com
      * @date 2017年8月1日 下午7:37:41
      */
     public static String format(Date date) {
@@ -133,7 +131,6 @@ public class DateFormatUtil {
      * @param date
      * @return String
      *
-     * @author sunhaojie@kingsoft.com
      * @date 2017年8月11日 下午5:54:36
      */
     public static String format(long date) {

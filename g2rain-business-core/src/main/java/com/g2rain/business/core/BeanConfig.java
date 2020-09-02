@@ -34,7 +34,6 @@ import com.g2rain.business.common.mybatis.SelectInterceptor;
  * @ClassName BeanConfig
  * @Description Bean 配置
  *
- * @author sunhaojie@kingsoft.com
  * @date 2017年7月24日 上午10:41:33
  */
 @Configuration

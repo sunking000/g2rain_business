@@ -12,7 +12,6 @@ import lombok.Setter;
  * @ClassName exception
  * @Description TODO
  *
- * @author sunhaojie@kingsoft.com
  * @date 2017年7月18日 下午8:37:17
  */
 @Getter

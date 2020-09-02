@@ -33,7 +33,6 @@ import com.g2rain.business.common.utils.MediaTypeUtil;
  * @ClassName BufferedServletRequestWrapper
  * @Description 重用输入流封装
  *
- * @author sunhaojie sunhaojie@kingsoft.com
  * @date 2017年1月7日 下午3:33:38
  */
 public class BufferedServletRequestWrapper extends HttpServletRequestWrapper {
@@ -80,7 +79,6 @@ public class BufferedServletRequestWrapper extends HttpServletRequestWrapper {
      * @Title getHeader
      * @return String
      *
-     * @author sunhaojie@kingsoft.com
      * @date 2017年8月11日 下午3:58:09
      */
     public String getHeader() {
@@ -109,7 +107,6 @@ public class BufferedServletRequestWrapper extends HttpServletRequestWrapper {
      * @Title getParam
      * @return String
      *
-     * @author sunhaojie@kingsoft.com
      * @date 2017年8月11日 下午4:06:52
      */
     public String getParam() {

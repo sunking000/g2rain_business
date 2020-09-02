@@ -26,7 +26,6 @@ import lombok.Setter;
  * @ClassName BussinessRuntimeExceptionFilter
  * @Description TODO
  *
- * @author sunhaojie@kingsoft.com
  * @date 2017年7月21日 上午10:51:28
  */
 @Setter
