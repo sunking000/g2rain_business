@@ -1,0 +1,89 @@
+version: '3'
+services:  
+  g2rain-business-gateway:
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway:v0.0.1
+    container_name: g2rain-business-gateway
+    ports:
+      - 8888:8888
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      REGISTRY_SERVER: ${REGISTRY_SERVER}
+      CONFIG_SERVER: ${CONFIG_SERVER}
+      HOST_IP: ${HOST_IP}
+    links:
+      - g2rain-business-registry-server
+      - g2rain-business-config-server  
+ 
+  g2rain-business-gateway-shell:
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway-shell:v0.0.1
+    container_name: g2rain-business-gateway-shell
+    ports:
+      - 8080
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      REGISTRY_SERVER: ${REGISTRY_SERVER}
+      CONFIG_SERVER: ${CONFIG_SERVER}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    links:
+      - g2rain-business-registry-server
+      - g2rain-business-config-server  
+
+  g2rain-business-core:
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-core:v0.0.1
+    container_name: g2rain-business-core
+    ports:
+      - 8080
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      REGISTRY_SERVER: ${REGISTRY_SERVER}
+      CONFIG_SERVER: ${CONFIG_SERVER}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    links:
+      - g2rain-business-registry-server
+      - g2rain-business-config-server  
+
+  g2rain-business-registry-server:
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-registry-server:v0.0.1
+    container_name: g2rain-business-registry-server
+    ports:
+      - 8761:8761
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+
+  g2rain-business-config-server:
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-config-server:v0.0.1
+    container_name: g2rain-business-config-server
+    ports:
+      - 8333:8333
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      REGISTRY_SERVER: ${REGISTRY_SERVER} 
+      HOST_IP: ${HOST_IP}
+    links:
+      - g2rain-business-registry-server  
+
+  g2rain-business-mysql:
+    container_name: g2rain-business-mysql        
+    image: mysql:5.7.22                   
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - "${MYSQL_DIR}/data:/var/lib/mysql"           
+      - "${MYSQL_DIR}/config:/etc/mysql/conf.d"    
+
+  g2rain-business-redis:
+    image: redis:5.0.0
+    container_name: g2rain-business-redis
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - "${REDIS_DIR}/data:/data"
