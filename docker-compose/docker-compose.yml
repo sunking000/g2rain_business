@@ -9,6 +9,7 @@ services:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
       CONFIG_SERVER: ${CONFIG_SERVER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       HOST_IP: ${HOST_IP}
     links:
       - g2rain-business-registry-server
