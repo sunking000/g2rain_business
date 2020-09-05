@@ -2,6 +2,7 @@ version: '3'
 services:  
   g2rain-business-gateway:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway:v0.0.1
+    restart: always
     container_name: g2rain-business-gateway
     ports:
       - 8888:8888
@@ -9,6 +10,7 @@ services:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
       CONFIG_SERVER: ${CONFIG_SERVER}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       HOST_IP: ${HOST_IP}
     links:
       - g2rain-business-registry-server
@@ -16,6 +18,7 @@ services:
  
   g2rain-business-gateway-shell:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway-shell:v0.0.1
+    restart: always
     container_name: g2rain-business-gateway-shell
     ports:
       - 8080
@@ -32,6 +35,7 @@ services:
 
   g2rain-business-core:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-core:v0.0.1
+    restart: always
     container_name: g2rain-business-core
     ports:
       - 8080
@@ -48,6 +52,7 @@ services:
 
   g2rain-business-registry-server:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-registry-server:v0.0.1
+    restart: always
     container_name: g2rain-business-registry-server
     ports:
       - 8761:8761
@@ -56,6 +61,7 @@ services:
 
   g2rain-business-config-server:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-config-server:v0.0.1
+    restart: always
     container_name: g2rain-business-config-server
     ports:
       - 8333:8333
@@ -75,6 +81,8 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
+    command:
+      --lower_case_table_names=1
     volumes:
       - "${MYSQL_DIR}/data:/var/lib/mysql"           
       - "${MYSQL_DIR}/config:/etc/mysql/conf.d"    
