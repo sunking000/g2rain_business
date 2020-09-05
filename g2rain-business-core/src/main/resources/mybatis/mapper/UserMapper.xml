@@ -66,34 +66,34 @@
 	<sql id="baseSelectSql">
 		<where>
 			delete_flag = false
-			<if test="organId != null and organId != null">
+			<if test="organId != null">
 				and	ORGAN_ID = #{organId}
 			</if>
-			<if test="username != null and username != null">
+			<if test="username != null">
 				and	USERNAME = #{username}
 			</if>
-			<if test="email != null and email != null">
+			<if test="email != null">
 				and	EMAIL = #{email}
 			</if>
-			<if test="mobile != null and mobile != null">
+			<if test="mobile != null">
 				and	MOBILE = #{mobile}
 			</if>
-			<if test="sex != null and sex != null">
+			<if test="sex != null ">
 				and	SEX = #{sex}
 			</if>
-			<if test="idNo != null and idNo != null">
+			<if test="idNo != null ">
 				and	ID_NO = #{idNo}
 			</if>
-			<if test="password != null and password != null">
+			<if test="password != null ">
 				and PASSWORD = #{password}
 			</if>
 			<if test="userId != null and userId != null">
 				and USER_ID = #{userId}
 			</if>
-			<if test="accessKey != null and accessKey != null">
+			<if test="accessKey != null">
 				and ACCESS_KEY = #{accessKey}
 			</if>
-			<if test="secretAccessKey != null and secretAccessKey != null">
+			<if test="secretAccessKey != null ">
 				and SECRET_ACCESS_KEY = #{secretAccessKey}
 			</if>
 			<if test="adminFlag != null">

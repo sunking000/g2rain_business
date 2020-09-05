@@ -17,16 +17,16 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
-	@Bean
+	@Bean("core")
 	public Docket createRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
-				.apis(RequestHandlerSelectors.basePackage("com.baiwang.aihardware.core"))
+				.apis(RequestHandlerSelectors.basePackage("com.g2rain.business.core"))
 				.paths(PathSelectors.any())
 				.build();
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Iot平台核心接口").description("Iot平台核心功能api")
-				.termsOfServiceUrl("http:///iot.baiwang.com").version("1.0").build();
+		return new ApiInfoBuilder().title("Grain rain 商业服务基础框架").description("Grain rain 商业服务基础框架")
+				.termsOfServiceUrl("http:///www.g2rain.com").version("1.0").build();
 	}
 }
