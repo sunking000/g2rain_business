@@ -1,5 +1,6 @@
 package com.g2rain.business.gateway.route;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -91,5 +92,20 @@ public class RouteDefinitionReader implements ApplicationEventPublisherAware {
 	@Override
 	public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
 		this.applicationEventPublisher = applicationEventPublisher;
+	}
+
+	public List<RouteDefinition> getRouteDefinitions() {
+		if (this.routeDefinitionRepository != null) {
+			List<RouteDefinition> routeDefinitions = new ArrayList<RouteDefinition>();
+			this.routeDefinitionRepository.getRouteDefinitions().subscribe(item -> {
+				routeDefinitions.add(item);
+			});
+			return routeDefinitions;
+		}
+		return null;
+	}
+
+	public Map<String, RouteDefinitionDomain> getRouteDefinitionDomainMap() {
+		return routeDefinitionDomainMap;
 	}
 }
