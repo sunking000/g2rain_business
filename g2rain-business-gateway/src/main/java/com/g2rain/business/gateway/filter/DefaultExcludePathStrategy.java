@@ -4,18 +4,29 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 
 @Service
 public class DefaultExcludePathStrategy implements ExcludePathStrategy {
 
 	private static Set<String> excludeApiPath = new HashSet<>();
+	private static Set<String> excludeApiPathPattern = new HashSet<>();
+	private static PathMatcher pathMatcher = new AntPathMatcher();
 
 	static {
 		excludeApiPath.add("/v2/api-docs");
+		excludeApiPathPattern.add("/*/v2/api-docs");
 	}
 
 	@Override
 	public boolean exclude(String contextPath, String apiPath) {
+		for (String pattern : excludeApiPathPattern) {
+			if (pathMatcher.match(pattern, apiPath)) {
+				return true;
+			}
+		}
+
 		return excludeApiPath.contains(apiPath);
 	}
 }
