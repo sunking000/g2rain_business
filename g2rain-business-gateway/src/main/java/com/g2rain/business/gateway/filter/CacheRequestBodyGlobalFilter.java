@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.annotation.Order;
@@ -16,17 +17,30 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 
+import com.g2rain.business.gateway.rc.CommonContextContainer;
+import com.g2rain.business.gateway.rc.Context;
 import com.g2rain.business.gateway.utils.JsonObjectUtil;
 
 import reactor.core.publisher.Mono;
 
 @Order(-10000)
 @Service
-public class CacheRequestBodyGlobalFilter implements GlobalFilter {
+public class CacheRequestBodyGlobalFilter implements GlobalFilter, ExcludePathStrategy {
 	public static final String CACHE_PARAMETER_STRING_KEY = "cachedParameterString";
+	@Autowired
+	private DefaultExcludePathStrategy defaultExcludePathStrategy;
 
 	@Override
+	public boolean exclude(String contextPath, String apiPath) {
+		return defaultExcludePathStrategy.exclude(contextPath, apiPath);
+	}
+	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		Context context = CommonContextContainer.getContext(exchange);
+		if (exclude(context.getApiContextPath(), context.getApiPath())) {
+			return chain.filter(exchange);
+		}
+
 		ServerHttpRequest request = exchange.getRequest();
 		HttpMethod method = request.getMethod();
 		String paramString = null;

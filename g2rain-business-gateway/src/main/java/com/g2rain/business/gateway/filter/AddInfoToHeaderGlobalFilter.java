@@ -19,14 +19,19 @@ import reactor.core.publisher.Mono;
 
 @Order(2000)
 @Service
-public class AddInfoToHeaderGlobalFilter implements GlobalFilter {
+public class AddInfoToHeaderGlobalFilter implements GlobalFilter, ExcludePathStrategy {
 
+	@Autowired
+	private DefaultExcludePathStrategy defaultExcludePathStrategy;
 	@Autowired
 	private HoldStoreIdCacheBo holdStoreIdCacheBo;
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		Context context = CommonContextContainer.getContext(exchange);
+		if (exclude(context.getApiContextPath(), context.getApiPath())) {
+			return chain.filter(exchange);
+		}
 		ServerHttpRequest.Builder builder = exchange.getRequest().mutate();
 		builder = addHeader(builder, CustomizeHeaderKeyEnum.SESSION_TYPE, context.getSessionType());
 		if (StringUtils.isNotBlank(context.getUserId())) {
@@ -61,5 +66,10 @@ public class AddInfoToHeaderGlobalFilter implements GlobalFilter {
 		if (StringUtils.isNotBlank(value))
 			builder = builder.header(headerKey.getLower(), value);
 		return builder;
+	}
+
+	@Override
+	public boolean exclude(String contextPath, String apiPath) {
+		return defaultExcludePathStrategy.exclude(contextPath, apiPath);
 	}
 }

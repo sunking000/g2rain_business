@@ -26,7 +26,7 @@ import reactor.core.publisher.Mono;
 
 @Order(1000)
 @Service
-public class AuthorizationVerifyGlobalFilter implements GlobalFilter {
+public class AuthorizationVerifyGlobalFilter implements GlobalFilter, ExcludePathStrategy {
 	private static final Logger log = LoggerFactory.getLogger(AuthorizationVerifyGlobalFilter.class);
 
 	@Autowired
@@ -35,58 +35,62 @@ public class AuthorizationVerifyGlobalFilter implements GlobalFilter {
 	private CoreClient coreClient;
 	@Value("${debug.key}")
 	private String debugKey;
-
 	private static Set<String> verifyExcludeApiContext = new HashSet<>();
-
 	private static Set<String> verifyExcludeApiPath = new HashSet<>();
 
 	public AuthorizationVerifyGlobalFilter() {
 		verifyExcludeApiContext.add("auth");
 		verifyExcludeApiPath.add("/user_auth/login");
 	}
-
-	public boolean requireVerify(Context context) {
-		return (!verifyExcludeApiContext.contains(context.getApiContextPath())
-				&& !verifyExcludeApiPath.contains(context.getApiPath()));
+	@Autowired
+	private DefaultExcludePathStrategy defaultExcludePathStrategy;
+	@Override
+	public boolean exclude(String contextPath, String apiPath) {
+		return defaultExcludePathStrategy.exclude(contextPath, apiPath)
+				|| verifyExcludeApiContext.contains(contextPath) ||
+				verifyExcludeApiPath.contains(apiPath);
 	}
+
+
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		Context context = CommonContextContainer.getContext(exchange);
-		if (requireVerify(context)) {
+		if (exclude(context.getApiContextPath(), context.getApiPath())) {
+			return chain.filter(exchange);
+		}
 
-			LoginToken loginToken = context.getLoginToken();
+		LoginToken loginToken = context.getLoginToken();
+		if (loginToken == null) {
+			loginToken = coreClient.getLoginToken(context.getAccessKey());
 			if (loginToken == null) {
-				loginToken = coreClient.getLoginToken(context.getAccessKey());
-				if (loginToken == null) {
-					throw new BussinessRuntimeException(ErrorCodeEnum.TOKEN_EXP_ERROR);
-				}
-				context.setLoginToken(loginToken);
+				throw new BussinessRuntimeException(ErrorCodeEnum.TOKEN_EXP_ERROR);
 			}
+			context.setLoginToken(loginToken);
+		}
 
-			boolean isDebug = false;
-			String headerDebugKey = context.getDebugKey();
-			if (StringUtils.isNotBlank(debugKey) && StringUtils.isNotBlank(headerDebugKey)
-					&& debugKey.equals(headerDebugKey)) {
-				log.info("debugKey:{}, headerDebugKey:{}", debugKey, headerDebugKey);
-				isDebug = true;
+		boolean isDebug = false;
+		String headerDebugKey = context.getDebugKey();
+		if (StringUtils.isNotBlank(debugKey) && StringUtils.isNotBlank(headerDebugKey)
+				&& debugKey.equals(headerDebugKey)) {
+			log.info("debugKey:{}, headerDebugKey:{}", debugKey, headerDebugKey);
+			isDebug = true;
+		}
+
+		if (!isDebug) {
+			if (StringUtils.isBlank(context.getSign())) {
+				throw new BussinessRuntimeException(ErrorCodeEnum.NO_SIGN);
 			}
-
-			if (!isDebug) {
-				if (StringUtils.isBlank(context.getSign())) {
-					throw new BussinessRuntimeException(ErrorCodeEnum.NO_SIGN);
+			if (!authBo.verifySign(context)) {
+				log.error("签名错误");
+				BussinessRuntimeException br = new BussinessRuntimeException(ErrorCodeEnum.SIGN_ERROR);
+				if (context.isDebugFlag()) {
+					br.addSubError("SIGN_PARAM_DATA", "paramString", authBo.getDataString(context));
 				}
-				if (!authBo.verifySign(context)) {
-					log.error("签名错误");
-					BussinessRuntimeException br = new BussinessRuntimeException(ErrorCodeEnum.SIGN_ERROR);
-					if (context.isDebugFlag()) {
-						br.addSubError("SIGN_PARAM_DATA", "paramString", authBo.getDataString(context));
-					}
 
-					throw br;
-				}
+				throw br;
 			}
 		}
 		return chain.filter(exchange);
-  }
+	}
 }

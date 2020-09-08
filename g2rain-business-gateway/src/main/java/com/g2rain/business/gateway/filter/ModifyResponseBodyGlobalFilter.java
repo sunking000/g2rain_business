@@ -22,6 +22,8 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.g2rain.business.gateway.adapter.CoreClient;
 import com.g2rain.business.gateway.exception.ErrorCodeMessageBo;
+import com.g2rain.business.gateway.rc.CommonContextContainer;
+import com.g2rain.business.gateway.rc.Context;
 import com.g2rain.business.gateway.utils.JsonObjectUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -35,18 +37,30 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
-public class ModifyResponseBodyGlobalFilter implements GlobalFilter, Ordered {
+public class ModifyResponseBodyGlobalFilter implements GlobalFilter, Ordered, ExcludePathStrategy {
 
 	@Autowired
 	private CoreClient coreClient;
 	@Autowired
 	private ErrorCodeMessageBo errorCodeMessageBo;
+	@Autowired
+	private DefaultExcludePathStrategy defaultExcludePathStrategy;
+
+	@Override
+	public boolean exclude(String contextPath, String apiPath) {
+		return defaultExcludePathStrategy.exclude(contextPath, apiPath);
+	}
 
 	private Cache<String, String> organCache = CacheBuilder.newBuilder().maximumSize(100000)
 			.expireAfterWrite(60, TimeUnit.MINUTES).build();
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		Context context = CommonContextContainer.getContext(exchange);
+		if (exclude(context.getApiContextPath(), context.getApiPath())) {
+			return chain.filter(exchange);
+		}
+
 		ServerHttpResponse response = exchange.getResponse();
 		DataBufferFactory bufferFactory = response.bufferFactory();
 

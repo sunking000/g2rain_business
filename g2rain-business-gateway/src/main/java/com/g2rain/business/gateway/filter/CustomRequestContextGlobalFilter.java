@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
@@ -29,8 +30,15 @@ import reactor.core.publisher.Mono;
 
 @Order(0)
 @Service
-public class CustomRequestContextGlobalFilter implements GlobalFilter {
+public class CustomRequestContextGlobalFilter implements GlobalFilter, ExcludePathStrategy {
 	private static final Logger log = LoggerFactory.getLogger(CustomRequestContextGlobalFilter.class);
+	@Autowired
+	private DefaultExcludePathStrategy defaultExcludePathStrategy;
+
+	@Override
+	public boolean exclude(String contextPath, String apiPath) {
+		return defaultExcludePathStrategy.exclude(contextPath, apiPath);
+	}
 
 	private String getHeaderValue(ServerHttpRequest request, HttpHeaders headers, CustomizeHeaderKeyEnum key) {
 		List<String> list = (headers.get(key.getUpper()) == null) ? headers.get(key.getLower())
@@ -47,8 +55,10 @@ public class CustomRequestContextGlobalFilter implements GlobalFilter {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		// 语言
 		Context context = CommonContextContainer.getContext(exchange);
+		if (exclude(context.getApiContextPath(), context.getApiPath())) {
+			return chain.filter(exchange);
+		}
 		ServerHttpRequest request = exchange.getRequest();
 		HttpHeaders headers = exchange.getRequest().getHeaders();
 
