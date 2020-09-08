@@ -15,6 +15,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.http.server.RequestPath;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
 import org.springframework.stereotype.Service;
@@ -22,8 +23,6 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.g2rain.business.gateway.adapter.CoreClient;
 import com.g2rain.business.gateway.exception.ErrorCodeMessageBo;
-import com.g2rain.business.gateway.rc.CommonContextContainer;
-import com.g2rain.business.gateway.rc.Context;
 import com.g2rain.business.gateway.utils.JsonObjectUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -56,8 +55,8 @@ public class ModifyResponseBodyGlobalFilter implements GlobalFilter, Ordered, Ex
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-		Context context = CommonContextContainer.getContext(exchange);
-		if (exclude(context.getApiContextPath(), context.getApiPath())) {
+		RequestPath path = exchange.getRequest().getPath();
+		if (exclude(path.contextPath().value(), path.value())) {
 			return chain.filter(exchange);
 		}
 
