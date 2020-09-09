@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@Order(-9000)
+@Order(20)
 @Service
 public class LogRequestGlobalFilter implements GlobalFilter, ExcludePathStrategy {
 	@Autowired

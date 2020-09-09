@@ -23,7 +23,7 @@ import com.g2rain.business.gateway.utils.JsonObjectUtil;
 
 import reactor.core.publisher.Mono;
 
-@Order(-10000)
+@Order(10)
 @Service
 public class CacheRequestBodyGlobalFilter implements GlobalFilter, ExcludePathStrategy {
 	public static final String CACHE_PARAMETER_STRING_KEY = "cachedParameterString";
