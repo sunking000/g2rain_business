@@ -17,8 +17,10 @@ import com.g2rain.business.gateway.shell.bo.RouteDefinitionBo;
 import com.g2rain.business.gateway.shell.po.param.RouteDefinitionSelectParam;
 import com.g2rain.business.gateway.shell.vo.RouteDefinitionVo;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+@Api
 @RequestMapping("route_definition")
 @Controller
 public class RouteDefinitionController {

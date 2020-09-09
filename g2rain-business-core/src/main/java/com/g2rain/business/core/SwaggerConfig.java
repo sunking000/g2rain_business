@@ -29,7 +29,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Grain rain 商业服务基础框架").description("Grain rain 商业服务基础框架")
+		return new ApiInfoBuilder().title("Grain rain 商业服务基础框架核心模块").description("Grain rain 商业服务基础框架")
 				.termsOfServiceUrl("http:///www.g2rain.com").version("1.0").build();
 	}
 }
