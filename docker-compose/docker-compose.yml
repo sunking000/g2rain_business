@@ -1,7 +1,7 @@
 version: '3'
 services:  
   g2rain-business-gateway:
-    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway:v0.0.1
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway:v0.0.5
     restart: always
     container_name: g2rain-business-gateway
     ports:
@@ -17,7 +17,7 @@ services:
       - g2rain-business-config-server  
  
   g2rain-business-gateway-shell:
-    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway-shell:v0.0.1
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway-shell:v0.0.2
     restart: always
     container_name: g2rain-business-gateway-shell
     ports:
@@ -34,7 +34,7 @@ services:
       - g2rain-business-config-server  
 
   g2rain-business-core:
-    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-core:v0.0.1
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-core:v0.0.3
     restart: always
     container_name: g2rain-business-core
     ports:
