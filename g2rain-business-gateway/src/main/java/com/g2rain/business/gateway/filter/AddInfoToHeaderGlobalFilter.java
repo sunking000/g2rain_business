@@ -15,8 +15,10 @@ import com.g2rain.business.gateway.rc.Context;
 import com.g2rain.business.gateway.rc.CustomizeHeaderKeyEnum;
 import com.g2rain.business.gateway.utils.OrganTypeEnum;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Order(2000)
 @Service
 public class AddInfoToHeaderGlobalFilter implements GlobalFilter, ExcludePathStrategy {
@@ -28,6 +30,7 @@ public class AddInfoToHeaderGlobalFilter implements GlobalFilter, ExcludePathStr
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		log.info("filter:AddInfoToHeaderGlobalFilter");
 		Context context = CommonContextContainer.getContext(exchange);
 		if (exclude(context.getApiContextPath(), context.getApiPath())) {
 			return chain.filter(exchange);

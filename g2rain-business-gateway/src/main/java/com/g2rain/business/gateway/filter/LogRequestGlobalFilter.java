@@ -28,6 +28,8 @@ public class LogRequestGlobalFilter implements GlobalFilter, ExcludePathStrategy
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		log.info("filter:LogRequestGlobalFilter");
+
 		Context context = CommonContextContainer.getContext(exchange);
 		if (exclude(context.getApiContextPath(), context.getApiPath())) {
 			return chain.filter(exchange);

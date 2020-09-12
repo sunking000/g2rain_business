@@ -55,6 +55,7 @@ public class CustomRequestContextGlobalFilter implements GlobalFilter, ExcludePa
 	@SuppressWarnings("unchecked")
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		log.info("filter:CustomRequestContextGlobalFilter");
 		Context context = CommonContextContainer.getContext(exchange);
 
 		ServerHttpRequest request = exchange.getRequest();

@@ -55,6 +55,8 @@ public class ModifyResponseBodyGlobalFilter implements GlobalFilter, Ordered, Ex
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		log.info("filter:ModifyResponseBodyGlobalFilter");
+
 		RequestPath path = exchange.getRequest().getPath();
 		if (exclude(null, path.value())) {
 			return chain.filter(exchange);

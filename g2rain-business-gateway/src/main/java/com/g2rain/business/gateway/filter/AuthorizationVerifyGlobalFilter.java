@@ -22,8 +22,10 @@ import com.g2rain.business.gateway.exception.ErrorCodeEnum;
 import com.g2rain.business.gateway.rc.CommonContextContainer;
 import com.g2rain.business.gateway.rc.Context;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Order(1000)
 @Service
 public class AuthorizationVerifyGlobalFilter implements GlobalFilter, ExcludePathStrategy {
@@ -55,6 +57,7 @@ public class AuthorizationVerifyGlobalFilter implements GlobalFilter, ExcludePat
 
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		log.info("filter:AuthorizationVerifyGlobalFilter");
 		Context context = CommonContextContainer.getContext(exchange);
 		if (exclude(context.getApiContextPath(), context.getApiPath())) {
 			return chain.filter(exchange);

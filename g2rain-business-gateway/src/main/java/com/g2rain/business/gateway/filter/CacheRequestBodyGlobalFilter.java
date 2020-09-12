@@ -21,8 +21,10 @@ import com.g2rain.business.gateway.rc.CommonContextContainer;
 import com.g2rain.business.gateway.rc.Context;
 import com.g2rain.business.gateway.utils.JsonObjectUtil;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Order(10)
 @Service
 public class CacheRequestBodyGlobalFilter implements GlobalFilter, ExcludePathStrategy {
@@ -36,6 +38,7 @@ public class CacheRequestBodyGlobalFilter implements GlobalFilter, ExcludePathSt
 	}
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+		log.info("filter:CacheRequestBodyGlobalFilter");
 		Context context = CommonContextContainer.getContext(exchange);
 		if (exclude(context.getApiContextPath(), context.getApiPath())) {
 			return chain.filter(exchange);
