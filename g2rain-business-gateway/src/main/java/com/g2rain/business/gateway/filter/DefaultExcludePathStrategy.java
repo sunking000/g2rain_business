@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class DefaultExcludePathStrategy implements ExcludePathStrategy {
 
@@ -24,7 +21,7 @@ public class DefaultExcludePathStrategy implements ExcludePathStrategy {
 
 	@Override
 	public boolean exclude(String contextPath, String apiPath) {
-		log.info("contextPath:{}, path:{}", contextPath, apiPath);
+		// log.info("contextPath:{}, path:{}", contextPath, apiPath);
 		for (String pattern : excludeApiPathPattern) {
 			if (pathMatcher.match(pattern, apiPath)) {
 				return true;

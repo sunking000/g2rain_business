@@ -17,7 +17,8 @@ public class AuthBo {
 	public boolean verifySign(Context context) {
 		LoginToken loginToken = context.getLoginToken();
 		String secretAccessKey = loginToken.getSecretAccessKey();
-		JsonObject signParam = JsonObjectUtil.parseObject(context.getParameterString());
+		JsonObject signParam = context.getParameterString() == null ? JsonObjectUtil.parseObject("{}")
+				: JsonObjectUtil.parseObject(context.getParameterString());
 		// JSONObject signParam = JSONObject.parseObject(context.getParameterString());
 		signParam.addProperty("path", context.getPath());
 		signParam.addProperty("X-REQUEST-ID", context.getRequestId());
@@ -34,7 +35,8 @@ public class AuthBo {
 	}
 
 	public String getDataString(Context context) {
-		JsonObject signParam = JsonObjectUtil.parseObject(context.getParameterString());
+		JsonObject signParam = context.getParameterString() == null ? JsonObjectUtil.parseObject("{}")
+				: JsonObjectUtil.parseObject(context.getParameterString());
 		// JSONObject signParam = JSONObject.parseObject(context.getParameterString());
 		signParam.addProperty("path", context.getPath());
 		signParam.addProperty("X-REQUEST-ID", context.getRequestId());

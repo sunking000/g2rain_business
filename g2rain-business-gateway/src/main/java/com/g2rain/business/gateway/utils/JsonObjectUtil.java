@@ -49,5 +49,6 @@ public class JsonObjectUtil {
 		System.out.println(
 				"{\\\"name\\\":\\\"餐费\\\",\\\"num\\\":\\\"1\\\",\\\"price\\\":\\\"10.5\\\",\\\"productId\\\":\\\"307040100000000000001\\\"}"
 						.replace("\\\"", "\""));
+		System.out.println(parseObject("{}").get("test"));
 	}
 }
