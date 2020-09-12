@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -29,7 +27,6 @@ import reactor.core.publisher.Mono;
 @Order(1000)
 @Service
 public class AuthorizationVerifyGlobalFilter implements GlobalFilter, ExcludePathStrategy {
-	private static final Logger log = LoggerFactory.getLogger(AuthorizationVerifyGlobalFilter.class);
 
 	@Autowired
 	private AuthBo authBo;

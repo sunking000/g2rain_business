@@ -24,7 +24,7 @@ public class AuthorityController {
 	@Autowired
 	private AuthorityBo authorityBo;
 
-	@AutoFill(userIdRequire = true, organIdRequire = true)
+	@AutoFill(userIdRequire = true)
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public SpecificResult<AuthorityVo> getAuthority(@RequestParam("userId") String userId,
