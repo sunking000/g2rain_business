@@ -108,9 +108,9 @@ public class CustomRequestContextGlobalFilter implements GlobalFilter, ExcludePa
 		context.setApiPath(path.value());
 
 		// getParameter
-		String requestParameter = (String) exchange
-				.getAttribute(CacheRequestBodyGlobalFilter.CACHE_PARAMETER_STRING_KEY);
-		context.setParameterString(requestParameter);
+		// String requestParameter = (String) exchange
+		// .getAttribute(CacheRequestBodyGlobalFilter.CACHE_PARAMETER_STRING_KEY);
+		// context.setParameterString(requestParameter);
 
 		Mono<Void> mono = chain.filter(exchange);
 		return mono;
@@ -130,7 +130,7 @@ public class CustomRequestContextGlobalFilter implements GlobalFilter, ExcludePa
 	// }
 	// params.put(parameterName, parameterValue);
 	// }
-	// paramString = JSONObject.toJSONString(params);
+	// paramString = JsonObjectUtil.toJson(params);
 	// } else {
 	// HttpHeaders headers = request.getHeaders();
 	// MediaType contentType = headers.getContentType();

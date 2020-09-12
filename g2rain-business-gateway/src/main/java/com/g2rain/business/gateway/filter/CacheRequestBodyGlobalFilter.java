@@ -68,6 +68,7 @@ public class CacheRequestBodyGlobalFilter implements GlobalFilter, ExcludePathSt
 		}
 		if (paramString != null) {
 			exchange.getAttributes().put(CACHE_PARAMETER_STRING_KEY, paramString);
+			context.setParameterString(paramString);
 		}
 
 		return chain.filter(exchange);
