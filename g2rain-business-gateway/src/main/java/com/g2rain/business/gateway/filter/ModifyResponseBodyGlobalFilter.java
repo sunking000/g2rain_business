@@ -23,8 +23,6 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.g2rain.business.gateway.adapter.CoreClient;
 import com.g2rain.business.gateway.exception.ErrorCodeMessageBo;
-import com.g2rain.business.gateway.rc.CommonContextContainer;
-import com.g2rain.business.gateway.rc.Context;
 import com.g2rain.business.gateway.utils.JsonObjectUtil;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -58,9 +56,6 @@ public class ModifyResponseBodyGlobalFilter implements GlobalFilter, Ordered, Ex
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		log.info("filter:ModifyResponseBodyGlobalFilter");
-
-		Context context = CommonContextContainer.getContext(exchange);
-		log.info("context:{}", JsonObjectUtil.toJson(context));
 
 		RequestPath path = exchange.getRequest().getPath();
 		if (exclude(null, path.value())) {

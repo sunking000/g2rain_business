@@ -19,6 +19,10 @@ public class CommonContextContainer {
 		return (Context) context;
 	}
 
+	public static void setContext(ServerWebExchange exchange, Context context) {
+		exchange.getAttributes().put(CONTEXT_NAME, context);
+	}
+
 	public static Map<String, String> getHeaders(Context context) {
 		Map<String, String> items = new HashMap<String, String>();
 		items.put(CustomizeHeaderKeyEnum.REQUEST_ID.getUpper(), context.getRequestId());
