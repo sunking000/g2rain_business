@@ -25,6 +25,7 @@ import com.g2rain.business.common.filters.CustomRequestContextFilter;
 import com.g2rain.business.common.filters.LogFilter;
 import com.g2rain.business.common.filters.ResetRequestResponseFilter;
 import com.g2rain.business.common.handler.emptystring.EmptyStringToNullConverter;
+import com.g2rain.business.common.interceptor.AutoFillInterceptor;
 import com.g2rain.business.common.interceptor.LoginInterceptor;
 import com.g2rain.business.common.mybatis.SelectInterceptor;
 
@@ -57,6 +58,8 @@ public class BeanConfig implements ApplicationContextAware, WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		LoginInterceptor loginInterceptor = new LoginInterceptor();
 		registry.addInterceptor(loginInterceptor).addPathPatterns("/**");
+		AutoFillInterceptor autoFillInterceptor = new AutoFillInterceptor();
+		registry.addInterceptor(autoFillInterceptor).addPathPatterns("/**");
 	}
 
 	@Bean

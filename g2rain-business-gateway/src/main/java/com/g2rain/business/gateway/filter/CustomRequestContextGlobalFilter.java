@@ -63,7 +63,7 @@ public class CustomRequestContextGlobalFilter implements GlobalFilter, ExcludePa
 
 		// debug flag
 		String debugFlagString = getHeaderValue(request, headers, CustomizeHeaderKeyEnum.DEBUG_FLAG);
-		log.info("debugFlagString:{}", debugFlagString);
+		log.debug("debugFlagString:{}", debugFlagString);
 		context.setDebugFlag(debugFlagString == null ? false : Boolean.valueOf(debugFlagString));
 
 		LocaleContext localeContext = exchange.getLocaleContext();
@@ -72,27 +72,27 @@ public class CustomRequestContextGlobalFilter implements GlobalFilter, ExcludePa
 
 		// request id
 		String requestId = getHeaderValue(request, headers, CustomizeHeaderKeyEnum.REQUEST_ID);
-		log.info("requestId:{}", requestId);
+		log.debug("requestId:{}", requestId);
 		context.setRequestId(requestId);
 
 		// request time
 		String requestTime = getHeaderValue(request, headers, CustomizeHeaderKeyEnum.REQUEST_TIME);
-		log.info("requestTime:{}", requestTime);
+		log.debug("requestTime:{}", requestTime);
 		context.setRequestTime(requestTime);
 
 		// accessKey
 		String accessKey = getHeaderValue(request, headers, CustomizeHeaderKeyEnum.ACCESS_KEY);
-		log.info("accessKey:{}", accessKey);
+		log.debug("accessKey:{}", accessKey);
 		context.setAccessKey(accessKey);
 
 		// sign
 		String sign = getHeaderValue(request, headers, CustomizeHeaderKeyEnum.SIGN);
-		log.info("sign:{}", sign);
+		log.debug("sign:{}", sign);
 		context.setSign(sign);
 
 		// debugKey
 		String debugKey = getHeaderValue(request, headers, CustomizeHeaderKeyEnum.DEBUG_KEY);
-		log.info("debugKey:{}", debugKey);
+		log.debug("debugKey:{}", debugKey);
 		context.setDebugKey(debugKey);
 
 		// 请求路径
