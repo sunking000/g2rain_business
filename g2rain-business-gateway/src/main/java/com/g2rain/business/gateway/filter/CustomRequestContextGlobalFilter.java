@@ -112,6 +112,7 @@ public class CustomRequestContextGlobalFilter implements GlobalFilter, ExcludePa
 		context.setParameterString(requestParameter);
 
 		Mono<Void> mono = chain.filter(exchange);
+		CommonContextContainer.removeContext(exchange);
 		return mono;
 	}
 

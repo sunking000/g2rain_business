@@ -11,12 +11,12 @@ public class CommonContextContainer {
 	private static final String CONTEXT_NAME = "context";
 
 	public static Context getContext(ServerWebExchange exchange) {
-		Context context = (Context) exchange.getAttribute(CONTEXT_NAME);
+		Object context = exchange.getAttribute(CONTEXT_NAME);
 		if (context == null) {
 			context = new Context();
 			exchange.getAttributes().put(CONTEXT_NAME, context);
 		}
-		return context;
+		return (Context) context;
 	}
 
 	public static Map<String, String> getHeaders(Context context) {
@@ -42,5 +42,12 @@ public class CommonContextContainer {
 			items.put("Accept-Language", locale.getLanguage());
 		}
 		return items;
+	}
+
+	public static void removeContext(ServerWebExchange exchange) {
+		Object context = exchange.getAttribute(CONTEXT_NAME);
+		if (context != null) {
+			exchange.getAttributes().remove(CONTEXT_NAME);
+		}
 	}
 }

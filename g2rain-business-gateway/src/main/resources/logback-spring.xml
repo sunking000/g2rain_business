@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<!--  
 	<turboFilter class="ch.qos.logback.classic.turbo.MDCFilter">
 		<MDCKey>DEBUG_PRINT_LEVEL</MDCKey>
 		<Value>TRUE</Value>
 		<OnMatch>ACCEPT</OnMatch>
 	</turboFilter>
-	 -->
 	<springProperty scope="context" name="SpringApplicationName" source="spring.application.name" />
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
