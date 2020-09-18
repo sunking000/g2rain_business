@@ -1,7 +1,7 @@
 version: '3'
 services:  
   g2rain-business-gateway:
-    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway:v0.0.6
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway:v0.0.7
     restart: always
     container_name: g2rain-business-gateway
     ports:

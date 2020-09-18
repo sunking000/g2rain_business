@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.g2rain.business.example.mapper.ExampleMapper">
+	<sql id="selectBaseSql">
+		<where>
+			DELETE_FLAG = false
+			<if test="organIdList != null">
+				and EXAMPLE_ID in 
+				<foreach collection="keyIds" open="(" close=")" item="item" separator=",">
+					#{item}
+				</foreach>
+			</if>
+			<if test="exampleId != null and exampleId != ''">
+				and EXAMPLE_ID = #{exampleId}
+			</if>
+			<if test="name != null and name != ''">
+				and NAME = #{name}
+			</if>
+			<if test="storeOrganId != null and storeOrganId != ''">
+				and STORE_ORGAN_ID = #{storeOrganId}
+			</if>
+			<if test="namePattern != null and namePattern != ''">
+				and NAME LIKE  #{namePattern}
+			</if>
+		</where>
+	</sql>	
+		
+	<select id="countByParam" resultType="java.lang.Integer" parameterType="OrganSelectParam">
+		select count(*) from example
+        <include refid="selectBaseSql"></include>
+	</select>
+	
+	
+	<select id="selectByParam" parameterType="OrganSelectParam" resultType="OrganPo">
+		select * from example
+			<include refid="selectBaseSql"></include>
+			order by id desc
+	</select>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into example(
+				ID, CREATE_TIME, UPDATE_TIME, VERSION, EXAMPLE_ID, NAME, DESCRIPTION
+			) values 
+			<foreach collection="examples" item="item" index="index" separator="," >  
+		        (
+		        	0, now(), now(), 0, #{item.exampleId},
+		        	#{item.name}, #{item.description}
+		        )  
+		    </foreach> 
+	</insert>
+	
+	<update id="update">
+		update example
+			<set>
+				UPDATE_TIME = now(),
+				VERSION = VERSION + 1,
+				<if test="name != null">
+					NAME = #{name},
+				</if>
+				<if test="description != null">
+					DESCRIPTION = #{description},
+				</if>
+			</set>
+			where EXAMPLE_ID = #{exampleId}
+	</update>
+	
+	<update id="deleteBatch">
+		update example
+			set DELETE_FLAG = true
+			where 
+			<foreach collection="exampleIds" item="item" open="(" close=")" separator="or">
+				EXAMPLE_ID = #{item}
+			</foreach>
+	</update>
+</mapper>
