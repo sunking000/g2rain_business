@@ -1,5 +1,7 @@
 package com.g2rain.business.example.vo.param;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.beans.BeanUtils;
 
 import com.g2rain.business.example.po.ExamplePo;
@@ -10,6 +12,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddOrUpdateExampleParam {
+	@NotBlank
+	private String storeOrganId;
 	/**
 	 * 全局唯一主键
 	 */
@@ -17,6 +21,7 @@ public class AddOrUpdateExampleParam {
 	/**
 	 * 名称
 	 */
+	@NotBlank
 	private String name;
 	/**
 	 * 描述

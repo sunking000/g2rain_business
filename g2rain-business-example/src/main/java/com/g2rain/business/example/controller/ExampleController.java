@@ -1,5 +1,7 @@
 package com.g2rain.business.example.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +27,7 @@ public class ExampleController {
 	@AutoFill(storeIdRequire = true)
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public SpecificResult<Integer> addOrUpdate(@RequestBody AddOrUpdateExampleParam param) {
+	public SpecificResult<Integer> addOrUpdate(@RequestBody @Valid AddOrUpdateExampleParam param) {
 		int editRowCount = exampleBo.addOrUpdate(param);
 
 		SpecificResult<Integer> result = new SpecificResult<>(SpecificResult.SUCCESS);
