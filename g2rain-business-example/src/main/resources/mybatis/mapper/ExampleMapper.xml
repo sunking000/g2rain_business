@@ -4,7 +4,7 @@
 	<sql id="selectBaseSql">
 		<where>
 			DELETE_FLAG = false
-			<if test="organIdList != null">
+			<if test="keyIds != null">
 				and EXAMPLE_ID in 
 				<foreach collection="keyIds" open="(" close=")" item="item" separator=",">
 					#{item}
