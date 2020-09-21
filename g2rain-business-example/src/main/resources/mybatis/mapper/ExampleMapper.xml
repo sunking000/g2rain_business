@@ -25,13 +25,13 @@
 		</where>
 	</sql>	
 		
-	<select id="countByParam" resultType="java.lang.Integer" parameterType="OrganSelectParam">
+	<select id="countByParam" resultType="java.lang.Integer" parameterType="ExampleSelectParam">
 		select count(*) from example
         <include refid="selectBaseSql"></include>
 	</select>
 	
 	
-	<select id="selectByParam" parameterType="OrganSelectParam" resultType="OrganPo">
+	<select id="selectByParam" parameterType="ExampleSelectParam" resultType="ExamplePo">
 		select * from example
 			<include refid="selectBaseSql"></include>
 			order by id desc
