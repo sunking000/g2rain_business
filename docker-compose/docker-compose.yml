@@ -1,5 +1,22 @@
 version: '3'
 services:  
+  g2rain-business-example:
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-example:v0.0.1
+    restart: always
+    container_name: g2rain-business-example
+    ports:
+      - 8080
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      REGISTRY_SERVER: ${REGISTRY_SERVER}
+      CONFIG_SERVER: ${CONFIG_SERVER}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    links:
+      - g2rain-business-registry-server
+      - g2rain-business-config-server
+
   g2rain-business-gateway:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway:v0.0.7
     restart: always
