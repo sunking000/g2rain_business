@@ -93,7 +93,7 @@ services:
     container_name: g2rain-business-mysql        
     image: mysql:5.7.22                   
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
