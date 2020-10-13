@@ -149,6 +149,15 @@
 	 </dependency>
   </dependencies>
   
+    <distributionManagement>
+	    <repository>
+	        <id>g2rain-maven</id>
+	        <name>g2rain-maven</name>
+	        <url>https://maven.g2rain.com/repository/maven-releases</url>
+	        <uniqueVersion>false</uniqueVersion>
+	    </repository>
+	</distributionManagement>
+  
   <build>
   	<plugins>
   		<plugin>
