@@ -39,12 +39,12 @@
 	
 	<insert id="insertBatch" parameterType="java.util.List">
 		insert into example(
-				ID, CREATE_TIME, UPDATE_TIME, VERSION, EXAMPLE_ID, NAME, DESCRIPTION
+				ID, CREATE_TIME, UPDATE_TIME, VERSION, EXAMPLE_ID, NAME, DESCRIPTION, CONTENT
 			) values 
 			<foreach collection="examples" item="item" index="index" separator="," >  
 		        (
 		        	0, now(), now(), 0, #{item.exampleId},
-		        	#{item.name}, #{item.description}
+		        	#{item.name}, #{item.description}, #{item.content}
 		        )  
 		    </foreach> 
 	</insert>
@@ -59,6 +59,9 @@
 				</if>
 				<if test="description != null">
 					DESCRIPTION = #{description},
+				</if>
+				<if test="content != null">
+					CONTENT = #{content},
 				</if>
 			</set>
 			where EXAMPLE_ID = #{exampleId}

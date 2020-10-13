@@ -15,8 +15,8 @@ import com.g2rain.business.example.po.param.ExampleSelectParam;
 @Mapper
 public interface ExampleMapper {
 
-	@Insert("insert into example(ID, CREATE_TIME, UPDATE_TIME, VERSION, EXAMPLE_ID, NAME, DESCRIPTION) "
-			+ " values(0, now(), now(), 0, #{exampleId}, #{name}, #{description})")
+	@Insert("insert into example(ID, CREATE_TIME, UPDATE_TIME, VERSION, EXAMPLE_ID, NAME, DESCRIPTION, CONTENT) "
+			+ " values(0, now(), now(), 0, #{exampleId}, #{name}, #{description}, #{content})")
 	public int insert(ExamplePo example);
 
 	public int insertBatch(@Param("examples") List<ExamplePo> examples);

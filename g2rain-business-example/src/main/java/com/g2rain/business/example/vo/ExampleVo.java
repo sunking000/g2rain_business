@@ -23,6 +23,10 @@ public class ExampleVo extends StoreOrganBaseVo {
 	 * 描述
 	 */
 	private String description;
+	/**
+	 * 内容
+	 */
+	private String content;
 
 	public ExampleVo() {
 		super();
