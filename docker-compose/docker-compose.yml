@@ -5,7 +5,7 @@ services:
     restart: always
     container_name: g2rain-business-example
     ports:
-      - 8083: 8083
+      - 8083:8083
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -13,7 +13,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-      SERVER_PORT: 8083
+      HOST_IP: ${HOST_IP}
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server
@@ -29,7 +29,7 @@ services:
       REGISTRY_SERVER: ${REGISTRY_SERVER}
       CONFIG_SERVER: ${CONFIG_SERVER}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      SERVER_PORT: 8888
+      HOST_IP: ${HOST_IP}
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
@@ -39,7 +39,7 @@ services:
     restart: always
     container_name: g2rain-business-gateway-shell
     ports:
-      - 8082: 8082
+      - 8082:8082
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -47,7 +47,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-      SERVER_PORT: 8082
+      HOST_IP: ${HOST_IP}
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
@@ -57,7 +57,7 @@ services:
     restart: always
     container_name: g2rain-business-core
     ports:
-      - 8081:8081
+      - 8080:8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -65,7 +65,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-      SERVER_PORT: 8081
+      HOST_IP: ${HOST_IP}
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
@@ -78,7 +78,6 @@ services:
       - 8761:8761
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      SERVER_PORT: 8761
 
   g2rain-business-config-server:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-config-server:v0.0.1
@@ -89,7 +88,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER} 
-      SERVER_PORT: 8333
+      HOST_IP: ${HOST_IP}
     links:
       - g2rain-business-registry-server  
 
