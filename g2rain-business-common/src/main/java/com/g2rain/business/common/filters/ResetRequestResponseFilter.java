@@ -17,12 +17,15 @@ import com.g2rain.business.common.servlet.BufferedServletRequestWrapper;
 import com.g2rain.business.common.servlet.BufferedServletResponseWrapper;
 import com.g2rain.business.common.utils.CommonContextContainer;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * @ClassName ResetRequestResponseFilter
  * @Description 重置request的输入流
  *
  * @date 2017年1月13日 下午11:57:14
  */
+@Slf4j
 public class ResetRequestResponseFilter implements Filter {
 
 	private String encoding = null;
@@ -52,6 +55,7 @@ public class ResetRequestResponseFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
+		log.debug("ResetRequestResponseFilter");
 		if (isExclude((HttpServletRequest) request)) {
 			chain.doFilter(request, response);
 			return;

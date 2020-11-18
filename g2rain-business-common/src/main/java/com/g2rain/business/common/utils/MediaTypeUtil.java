@@ -1,5 +1,7 @@
 package com.g2rain.business.common.utils;
 
+import java.net.URLConnection;
+
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -9,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
  *
  */
 public class MediaTypeUtil {
+
 
 	/**
 	 * 是否为文件上传格式
@@ -31,7 +34,7 @@ public class MediaTypeUtil {
 	 */
 	public static boolean isText(String contentType) {
 		if (contentType == null) {
-			return true;
+			return false;
 		}
 		String majorTypeString = null;
 		String minorTypeString = null;
@@ -52,5 +55,15 @@ public class MediaTypeUtil {
 
 
 		return true;
+	}
+
+	public static String getContentType(String fileType) {
+		String mimeType = URLConnection.guessContentTypeFromName(fileType);
+
+		return mimeType;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(getContentType(".png"));
 	}
 }

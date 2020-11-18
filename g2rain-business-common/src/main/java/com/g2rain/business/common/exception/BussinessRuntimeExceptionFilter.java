@@ -20,6 +20,7 @@ import com.g2rain.business.common.exception.strategy.FailResultResponseStrategy;
 import com.g2rain.business.common.result.BaseResult;
 
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
@@ -28,6 +29,7 @@ import lombok.Setter;
  *
  * @date 2017年7月21日 上午10:51:28
  */
+@Slf4j
 @Setter
 public class BussinessRuntimeExceptionFilter implements Filter {
 
@@ -51,6 +53,7 @@ public class BussinessRuntimeExceptionFilter implements Filter {
     @Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
         ServletException {
+		log.debug("BussinessRuntimeExceptionFilter");
         BaseResult fail = null;
         try {
             chain.doFilter(request, response);

@@ -27,7 +27,6 @@ import reactor.core.publisher.Mono;
 @Order(1000)
 @Service
 public class AuthorizationVerifyGlobalFilter implements GlobalFilter, ExcludePathStrategy {
-
 	@Autowired
 	private AuthBo authBo;
 	@Autowired

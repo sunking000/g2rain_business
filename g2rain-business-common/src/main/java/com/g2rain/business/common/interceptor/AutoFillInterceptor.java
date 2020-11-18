@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -18,9 +16,10 @@ import com.g2rain.business.common.exception.BussinessRuntimeException;
 import com.g2rain.business.common.servlet.BufferedServletRequestWrapper;
 import com.g2rain.business.common.utils.CommonContextContainer;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class AutoFillInterceptor extends HandlerInterceptorAdapter {
-	private static Logger logger = LoggerFactory.getLogger(AutoFillInterceptor.class);
-	
 
 	public AutoFillInterceptor() {
 	}
@@ -32,7 +31,7 @@ public class AutoFillInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-
+		log.debug("AutoFillInterceptor");
 		if (isExclude(request)) {
 			return true;
 		}
@@ -45,7 +44,7 @@ public class AutoFillInterceptor extends HandlerInterceptorAdapter {
 			// 存在注解，并且不是管理员和代理商进行自动填充
 			if (!CommonContextContainer.isAdminCompany()) {
 				if (!(request instanceof BufferedServletRequestWrapper)) {
-					logger.error("request 类型错误，必须为BufferedServletRequestWrapper");
+					log.error("request 类型错误，必须为BufferedServletRequestWrapper");
 					throw new BussinessRuntimeException(ErrorCodeEnum.SERVICE_ERROR);
 				}
 

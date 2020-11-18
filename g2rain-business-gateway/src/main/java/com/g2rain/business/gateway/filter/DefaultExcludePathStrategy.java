@@ -17,6 +17,7 @@ public class DefaultExcludePathStrategy implements ExcludePathStrategy {
 	static {
 		excludeApiPath.add("/v2/api-docs");
 		excludeApiPathPattern.add("/*/v2/api-docs");
+		excludeApiPathPattern.add("/rf/*");
 	}
 
 	@Override

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.g2rain.business.file.store.mapper.FileObjectMapper">
+	<sql id="selectBaseSql">
+		<where>
+			DELETE_FLAG = false
+			<if test="keyIds != null">
+				and EXAMPLE_ID in 
+				<foreach collection="keyIds" open="(" close=")" item="item" separator=",">
+					#{item}
+				</foreach>
+			</if>
+			<if test="fileId != null and fileId != ''">
+				and FILE_ID = #{fileId}
+			</if>
+			<if test="fileName != null and fileName != ''">
+				and FILE_NAME = #{fileName}
+			</if>
+			<if test="md5 != null and md5 != ''">
+				and MD5 = #{md5}
+			</if>
+			<if test="fileType != null and fileType != ''">
+				and FILE_TYPE = #{fileType}
+			</if>
+			<if test="storeType != null and storeType != ''">
+				and STORE_TYPE = #{storeType}
+			</if>
+			<if test="storePath != null and storePath != ''">
+				and STORE_PATH = #{storePath}
+			</if>
+			<if test="namePattern != null and namePattern != ''">
+				and FILE_NAME LIKE  #{namePattern}
+			</if>
+		</where>
+	</sql>	
+		
+	<select id="countByParam" resultType="java.lang.Integer" parameterType="FileObjectSelectParam">
+		select count(*) from file_object
+        <include refid="selectBaseSql"></include>
+	</select>
+	
+	
+	<select id="selectByParam" parameterType="FileObjectSelectParam" resultType="FileObjectPo">
+		select * from file_object
+			<include refid="selectBaseSql"></include>
+			order by id desc
+	</select>
+	
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into file_object(
+				ID, CREATE_TIME, UPDATE_TIME, VERSION, FILE_ID, FILE_NAME, MD5, FILE_TYPE, STORE_TYPE, STORE_PATH, DESCRIPTION
+			) values 
+			<foreach collection="fileObjects" item="item" index="index" separator="," >  
+		        (
+		        	0, now(), now(), 0, #{item.fileId},
+		        	#{item.fileName}, #{item.md5}, #{item.fileType},
+		        	#{item.storeType}, #{item.storePath}, #{item.description}
+		        )  
+		    </foreach> 
+	</insert>
+	
+	<update id="update">
+		update file_object
+			<set>
+				UPDATE_TIME = now(),
+				VERSION = VERSION + 1,
+				<if test="fileName != null">
+					FILE_NAME = #{fileName},
+				</if>
+				<if test="md5 != null">
+					MD5 = #{md5},
+				</if>
+				<if test="fileType != null">
+					FILE_TYPE = #{fileType},
+				</if>
+				<if test="storeType != null">
+					STORE_TYPE = #{storeType},
+				</if>
+				<if test="storePath != null">
+					STORE_PATH = #{storePath},
+				</if>
+				<if test="description != null">
+					DESCRIPTION = #{description},
+				</if>
+			</set>
+			where FILE_ID = #{fileId}
+	</update>
+	
+	<update id="deleteBatch">
+		update file_object
+			set DELETE_FLAG = true
+			where 
+			<foreach collection="fileIds" item="item" open="(" close=")" separator="or">
+				FILE_ID = #{item}
+			</foreach>
+	</update>
+</mapper>
