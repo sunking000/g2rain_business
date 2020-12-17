@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.g2rain.business.common.result.SpecificPageInfoResult;
+import com.g2rain.business.file.store.enums.FileObjectStatusEnum;
 import com.g2rain.business.file.store.mapper.FileObjectMapper;
 import com.g2rain.business.file.store.po.FileObjectPo;
 import com.g2rain.business.file.store.po.param.FileObjectSelectParam;
@@ -68,14 +69,13 @@ public class FileObjectBo {
 		return fileObjectVo;
 	}
 
-	public FileObjectPo createFileObjectPo(String fileOriginalFileName, String fileType, String md5, String storeType,
+	public FileObjectPo createFileObjectPo(String fileOriginalFileName, String fileType, String storeType,
 			String storePath) {
 		FileObjectPo fileObjectPo = new FileObjectPo();
 		String fileId = sequenceBo.getDefaultSequenceId();
 		fileObjectPo.setFileId(fileId);
 		fileObjectPo.setFileName(fileOriginalFileName);
 		fileObjectPo.setFileType(fileType);
-		fileObjectPo.setMd5(md5);
 		fileObjectPo.setStorePath(storePath);
 		fileObjectPo.setStoreType(storeType);
 
@@ -84,5 +84,15 @@ public class FileObjectBo {
 
 	public String getServerContextPath() {
 		return serverContextPath;
+	}
+
+	public FileObjectVo callback(String fileId) {
+		fileObjectMapper.updateStatus(fileId, FileObjectStatusEnum.SUCCESS.name());
+		FileObjectPo fileObjectPo = fileObjectMapper.get(fileId);
+		if (fileObjectPo != null) {
+			return new FileObjectVo(fileObjectPo);
+		}
+
+		return null;
 	}
 }

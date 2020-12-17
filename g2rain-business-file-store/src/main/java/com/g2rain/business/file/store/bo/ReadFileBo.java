@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.g2rain.business.common.enums.ErrorCodeEnum;
 import com.g2rain.business.common.exception.BussinessRuntimeException;
 import com.g2rain.business.file.store.bo.domain.DownloadFileDomain;
+import com.g2rain.business.file.store.enums.DownloadFileDomainActionEnum;
+import com.g2rain.business.file.store.enums.FileStoreTypeEnum;
 import com.g2rain.business.file.store.vo.FileObjectVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,8 @@ public class ReadFileBo {
 	private FileObjectBo fileObjectBo;
 	@Autowired
 	private FileBo fileBo;
+	@Autowired
+	private OssBo ossBo;
 
 	public DownloadFileDomain readFile(String fileObjectId) {
 		FileObjectVo fileObjectVo = fileObjectBo.get(fileObjectId);
@@ -27,8 +31,13 @@ public class ReadFileBo {
 			throw new BussinessRuntimeException(ErrorCodeEnum.DATA_NON_EXISTENT);
 		}
 
-		DownloadFileDomain downloadFileDomain = new DownloadFileDomain(fileObjectVo,
-				fileBo.getFileDir());
+		DownloadFileDomain downloadFileDomain = new DownloadFileDomain(fileObjectVo, fileBo.getFileDir());
+		if (FileStoreTypeEnum.OSS.name().equals(fileObjectVo.getStoreType())) {
+			String signGetObjectUrl = ossBo.signGetObjectUrl(fileObjectId);
+			downloadFileDomain.setAction(DownloadFileDomainActionEnum.REDIRECT);
+			downloadFileDomain.setOssUrl(signGetObjectUrl);
+		}
+
 		if (StringUtils.isBlank(downloadFileDomain.getFileUrl())
 				&& StringUtils.isBlank(downloadFileDomain.getOssUrl())) {
 			return null;

@@ -13,11 +13,11 @@
 			<if test="fileId != null and fileId != ''">
 				and FILE_ID = #{fileId}
 			</if>
+			<if test="storeOrganId != null and storeOrganId != ''">
+				and STORE_ORGAN_ID = #{storeOrganId}
+			</if>
 			<if test="fileName != null and fileName != ''">
 				and FILE_NAME = #{fileName}
-			</if>
-			<if test="md5 != null and md5 != ''">
-				and MD5 = #{md5}
 			</if>
 			<if test="fileType != null and fileType != ''">
 				and FILE_TYPE = #{fileType}
@@ -27,6 +27,12 @@
 			</if>
 			<if test="storePath != null and storePath != ''">
 				and STORE_PATH = #{storePath}
+			</if>
+			<if test="status != null and status != ''">
+				and STATUS = #{status}
+			</if>
+			<if test="organId != null and organId != ''">
+				and ORGAN_ID = #{organId}
 			</if>
 			<if test="namePattern != null and namePattern != ''">
 				and FILE_NAME LIKE  #{namePattern}
@@ -48,13 +54,14 @@
 	
 	<insert id="insertBatch" parameterType="java.util.List">
 		insert into file_object(
-				ID, CREATE_TIME, UPDATE_TIME, VERSION, FILE_ID, FILE_NAME, MD5, FILE_TYPE, STORE_TYPE, STORE_PATH, DESCRIPTION
+				ID, CREATE_TIME, UPDATE_TIME, VERSION, FILE_ID, FILE_NAME, FILE_TYPE, STORE_TYPE, STORE_PATH, DESCRIPTION, STATUS, ORGAN_ID
 			) values 
 			<foreach collection="fileObjects" item="item" index="index" separator="," >  
 		        (
 		        	0, now(), now(), 0, #{item.fileId},
-		        	#{item.fileName}, #{item.md5}, #{item.fileType},
-		        	#{item.storeType}, #{item.storePath}, #{item.description}
+		        	#{item.fileName}, #{item.fileType},
+		        	#{item.storeType}, #{item.storePath}, #{item.description}, 
+		        	#{item.status}, #{item.organId}
 		        )  
 		    </foreach> 
 	</insert>
@@ -64,24 +71,12 @@
 			<set>
 				UPDATE_TIME = now(),
 				VERSION = VERSION + 1,
-				<if test="fileName != null">
-					FILE_NAME = #{fileName},
-				</if>
-				<if test="md5 != null">
-					MD5 = #{md5},
-				</if>
-				<if test="fileType != null">
-					FILE_TYPE = #{fileType},
-				</if>
-				<if test="storeType != null">
-					STORE_TYPE = #{storeType},
-				</if>
-				<if test="storePath != null">
-					STORE_PATH = #{storePath},
-				</if>
-				<if test="description != null">
-					DESCRIPTION = #{description},
-				</if>
+				FILE_NAME = #{fileName},
+				FILE_TYPE = #{fileType},
+				STORE_TYPE = #{storeType},
+				STORE_PATH = #{storePath},
+				DESCRIPTION = #{description},
+				STATUS = #{status},
 			</set>
 			where FILE_ID = #{fileId}
 	</update>

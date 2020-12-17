@@ -25,8 +25,6 @@ public class DownloadFileDomain {
 
 		if (FileStoreTypeEnum.NATIVE.name().equals(fileObjectVo.getStoreType())) {
 			this.fileUrl = fileStoreDir + "/" + fileObjectVo.getStorePath();
-		} else if (FileStoreTypeEnum.OSS.name().equals(fileObjectVo.getStoreType())) {
-			this.ossUrl = fileObjectVo.getStorePath();
 		}
 
 		this.fileName = fileObjectVo.getFileName();

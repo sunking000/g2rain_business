@@ -1,13 +1,13 @@
 package com.g2rain.business.file.store.po.param;
 
-import com.g2rain.business.common.domain.BaseSelectParam;
+import com.g2rain.business.common.domain.StoreBaseSelectParam;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class FileObjectSelectParam extends BaseSelectParam {
+public class FileObjectSelectParam extends StoreBaseSelectParam {
 	/**
 	 * 文件ID
 	 */
@@ -36,6 +36,10 @@ public class FileObjectSelectParam extends BaseSelectParam {
 	 * 名称模式
 	 */
 	private String namePattern;
+	/**
+	 * 状态
+	 */
+	private String status;
 
 	public FileObjectSelectParam() {
 		super();

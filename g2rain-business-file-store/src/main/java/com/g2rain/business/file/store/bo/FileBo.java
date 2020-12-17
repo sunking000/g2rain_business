@@ -1,7 +1,6 @@
 package com.g2rain.business.file.store.bo;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.g2rain.business.common.utils.FileTypeUtils;
+import com.g2rain.business.file.store.enums.FileObjectStatusEnum;
 import com.g2rain.business.file.store.enums.FileStoreTypeEnum;
 import com.g2rain.business.file.store.po.FileObjectPo;
 import com.g2rain.business.file.store.vo.FileObjectVo;
@@ -48,7 +47,7 @@ public class FileBo implements ApplicationListener<ContextRefreshedEvent> {
 
 	}
 
-	public List<FileObjectVo> saveFiles(HttpServletRequest request, MultipartFile[] files) {
+	public List<FileObjectVo> saveFiles(HttpServletRequest request, MultipartFile[] files, String organId) {
 
 		File file = new File(fileDir);
 		if (!file.exists()) {
@@ -65,10 +64,10 @@ public class FileBo implements ApplicationListener<ContextRefreshedEvent> {
 					File storeFile = new File(file, storeFilePath);
 					files[i].transferTo(storeFile);
 					String fileType = FileTypeUtils.getFileType(storeFile);
-					String md5 = DigestUtils.md5Hex(new FileInputStream(storeFile.getAbsolutePath()));
-					FileObjectPo fileObjectPo = fileObjectBo.createFileObjectPo(originalFilename, fileType, md5,
+					FileObjectPo fileObjectPo = fileObjectBo.createFileObjectPo(originalFilename, fileType,
 							FileStoreTypeEnum.NATIVE.name(),
 							storeFilePath);
+					fileObjectPo.setStatus(FileObjectStatusEnum.SUCCESS.name());
 					fileObjectPos.add(fileObjectPo);
 				} catch (IllegalStateException | IOException e) {
 					log.error(e.getMessage(), e);

@@ -19,6 +19,7 @@ import lombok.Setter;
 @Setter
 @JsonIgnoreProperties("serverContextPath")
 public class FileObjectVo extends BaseVo {
+	private String organId;
 	/**
 	 * 文件ID
 	 */
@@ -27,10 +28,6 @@ public class FileObjectVo extends BaseVo {
 	 * 文件名称
 	 */
 	private String fileName;
-	/**
-	 * 文件的md5
-	 */
-	private String md5;
 	/**
 	 * 文件类型，普通文件,图片,视频
 	 */
@@ -47,6 +44,10 @@ public class FileObjectVo extends BaseVo {
 	 * 描述
 	 */
 	private String description;
+	/**
+	 * 状态
+	 */
+	private String status;
 	private String serverContextPath;
 
 	public String getFileUrl() {
