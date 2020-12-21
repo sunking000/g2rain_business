@@ -27,6 +27,7 @@ public class FileObjectBo {
 	private SequenceBo sequenceBo;
 	@Value("${server.context.path}")
 	private String serverContextPath;
+	private static final String readFilePath = "/rf/";
 
 	public SpecificPageInfoResult<FileObjectVo> list(FileObjectSelectParam param) {
 		PageHelper.startPage(param.getPageNum(), param.getPageSize());
@@ -37,7 +38,7 @@ public class FileObjectBo {
 		if (CollectionUtils.isNotEmpty(poList)) {
 			for (FileObjectPo item : poList) {
 				FileObjectVo vo = new FileObjectVo(item);
-				vo.setServerContextPath(serverContextPath);
+				vo.setServerContextPath(getServerContextPath());
 				fileObjectVos.add(vo);
 			}
 		}
@@ -83,14 +84,16 @@ public class FileObjectBo {
 	}
 
 	public String getServerContextPath() {
-		return serverContextPath;
+		return serverContextPath + readFilePath;
 	}
 
 	public FileObjectVo callback(String fileId) {
 		fileObjectMapper.updateStatus(fileId, FileObjectStatusEnum.SUCCESS.name());
 		FileObjectPo fileObjectPo = fileObjectMapper.get(fileId);
 		if (fileObjectPo != null) {
-			return new FileObjectVo(fileObjectPo);
+			FileObjectVo fileObjectVo = new FileObjectVo(fileObjectPo);
+			fileObjectVo.setServerContextPath(getServerContextPath());
+			return fileObjectVo;
 		}
 
 		return null;

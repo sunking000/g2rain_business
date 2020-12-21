@@ -1,7 +1,6 @@
 package com.g2rain.business.file.store.bo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.g2rain.business.file.store.adapter.AliyunOssClient;
@@ -15,9 +14,6 @@ import com.g2rain.business.file.store.vo.OssSignatureResult;
 
 @Service
 public class OssBo {
-
-	@Value("${oss.client.callbackUrl}")
-	private String callbackUrl;
 	@Autowired
 	private AliyunOssClient aliyunOssClient;
 	@Autowired

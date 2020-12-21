@@ -25,7 +25,7 @@ public class AuthBo {
 		signParam.addProperty("X-REQUEST-TIME", context.getRequestTime());
 		signParam.addProperty("X-ACCESS-KEY", context.getAccessKey());
 		if (!HmacSHA256Util.verify(HmacSHA256Util.getDataString(signParam), secretAccessKey, context.getSign())) {
-			log.error("检验错误:signParam:{},publicKey:{},sign:{}",
+			log.error("检验错误:signParam:{},secretAccessKey:{},sign:{}",
 					HmacSHA256Util.getDataString(signParam), secretAccessKey,
 					context.getSign());
 			return false;

@@ -30,11 +30,11 @@ public class AliyunOssClient {
 	private String bucketName;
 	@Value("${aliyun.oss.client.dir}")
 	private String dir;
-	@Value("${upload.callback.domain}")
+	@Value("${server.context.path}")
 	private String uploadCallbackDomain;
 	private OSS client;
 	private static final long expireTime = 300;
-	private final static String callbackUrl = "/api/file_store/direct/callback/aliyun";
+	private final static String callbackUrl = "/direct/callback/aliyun";
 
 	@PostConstruct
 	public void init() {
