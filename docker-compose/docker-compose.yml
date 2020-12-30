@@ -4,8 +4,8 @@ services:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-example:v0.0.1
     restart: always
     container_name: g2rain-business-example
-    ports:
-      - 8083:8083
+    expose:
+      - 8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -14,6 +14,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       HOST_IP: ${HOST_IP}
+      server.port: 8080
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server
@@ -39,8 +40,8 @@ services:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway-shell:v0.0.2
     restart: always
     container_name: g2rain-business-gateway-shell
-    ports:
-      - 8082:8082
+    expose:
+      - 8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -49,6 +50,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       HOST_IP: ${HOST_IP}
+      server.port: 8080
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
@@ -57,8 +59,8 @@ services:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-core:v0.0.4
     restart: always
     container_name: g2rain-business-core
-    ports:
-      - 8080:8080
+    expose:
+      - 8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -67,6 +69,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       HOST_IP: ${HOST_IP}
+      server.port: 8080
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
@@ -75,8 +78,8 @@ services:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-file-store:v0.0.1
     restart: always
     container_name: g2rain-business-file-store
-    ports:
-      - 8081:8080
+    expose:
+      - 8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -90,6 +93,7 @@ services:
       ALIYUN_OSS_CLIENT_ACCESSKEYSECRET: ${ALIYUN_OSS_CLIENT_ACCESSKEYSECRET}
       ALIYUN_OSS_CLIENT_BUCKETNAME: ${ALIYUN_OSS_CLIENT_BUCKETNAME}
       ALIYUN_OSS_CLIENT_DIR: ${ALIYUN_OSS_CLIENT_DIR}
+      server.port: 8080
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
