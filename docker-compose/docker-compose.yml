@@ -30,6 +30,7 @@ services:
       CONFIG_SERVER: ${CONFIG_SERVER}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       HOST_IP: ${HOST_IP}
+      server.port: 8888
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
