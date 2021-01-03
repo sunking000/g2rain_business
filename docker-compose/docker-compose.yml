@@ -4,8 +4,8 @@ services:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-example:v0.0.1
     restart: always
     container_name: g2rain-business-example
-    expose:
-      - 8080
+    ports:
+      - 8083:8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -40,8 +40,8 @@ services:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway-shell:v0.0.2
     restart: always
     container_name: g2rain-business-gateway-shell
-    expose:
-      - 8080
+    ports:
+      - 8082:8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -59,8 +59,8 @@ services:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-core:v0.0.4
     restart: always
     container_name: g2rain-business-core
-    expose:
-      - 8080
+    ports:
+      - 8080:8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
@@ -78,8 +78,8 @@ services:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-file-store:v0.0.1
     restart: always
     container_name: g2rain-business-file-store
-    expose:
-      - 8080
+    ports:
+      - 8084:8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
