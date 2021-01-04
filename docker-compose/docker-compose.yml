@@ -7,6 +7,7 @@ services:
     ports:
       - 8083:8080
     environment:
+      TZ: Asia/Shanghai      
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
       CONFIG_SERVER: ${CONFIG_SERVER}
@@ -26,6 +27,7 @@ services:
     ports:
       - 8888:8888
     environment:
+      TZ: Asia/Shanghai      
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
       CONFIG_SERVER: ${CONFIG_SERVER}
@@ -43,6 +45,7 @@ services:
     ports:
       - 8082:8080
     environment:
+      TZ: Asia/Shanghai      
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
       CONFIG_SERVER: ${CONFIG_SERVER}
@@ -62,6 +65,7 @@ services:
     ports:
       - 8080:8080
     environment:
+      TZ: Asia/Shanghai      
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
       CONFIG_SERVER: ${CONFIG_SERVER}
@@ -81,6 +85,7 @@ services:
     ports:
       - 8084:8080
     environment:
+      TZ: Asia/Shanghai      
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER}
       CONFIG_SERVER: ${CONFIG_SERVER}
@@ -105,6 +110,7 @@ services:
     ports:
       - 8761:8761
     environment:
+      TZ: Asia/Shanghai      
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
 
   g2rain-business-config-server:
@@ -114,6 +120,7 @@ services:
     ports:
       - 8333:8333
     environment:
+      TZ: Asia/Shanghai      
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER} 
       HOST_IP: ${HOST_IP}
@@ -126,6 +133,7 @@ services:
     ports:
       - "3307:3306"
     environment:
+      TZ: Asia/Shanghai      
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_ROOT_HOST: ${MYSQL_ROOT_HOST}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
@@ -141,5 +149,7 @@ services:
     command: redis-server --requirepass ${REDIS_PASSWORD}
     ports:
       - "6379:6379"
+    environment:
+      TZ: Asia/Shanghai    
     volumes:
       - "${REDIS_DIR}/data:/data"
