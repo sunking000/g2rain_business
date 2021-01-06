@@ -18,6 +18,8 @@ services:
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server
+    volumes:
+      - /etc/localtime:/etc/localtime        
 
   g2rain-business-gateway:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway:v0.0.7
@@ -35,6 +37,8 @@ services:
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
+    volumes:
+      - /etc/localtime:/etc/localtime        
  
   g2rain-business-gateway-shell:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway-shell:v0.0.2
@@ -54,6 +58,8 @@ services:
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
+    volumes:
+      - /etc/localtime:/etc/localtime        
 
   g2rain-business-core:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-core:v0.0.4
@@ -73,6 +79,8 @@ services:
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
+    volumes:
+      - /etc/localtime:/etc/localtime        
 
   g2rain-business-file-store:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-file-store:v0.0.1
@@ -97,6 +105,8 @@ services:
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
+    volumes:
+      - /etc/localtime:/etc/localtime        
 
   g2rain-business-registry-server:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-registry-server:v0.0.1
@@ -106,6 +116,8 @@ services:
       - 8761:8761
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+    volumes:
+      - /etc/localtime:/etc/localtime      
 
   g2rain-business-config-server:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-config-server:v0.0.1
@@ -119,6 +131,8 @@ services:
       HOST_IP: ${HOST_IP}
     links:
       - g2rain-business-registry-server  
+    volumes:
+      - /etc/localtime:/etc/localtime        
 
   g2rain-business-mysql:
     container_name: g2rain-business-mysql        
