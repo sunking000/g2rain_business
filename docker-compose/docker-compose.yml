@@ -15,6 +15,7 @@ services:
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       HOST_IP: ${HOST_IP}
       server.port: 8080
+      TZ: "Asia/Shanghai"
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server
