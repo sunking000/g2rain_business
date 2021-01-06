@@ -13,7 +13,6 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-      HOST_IP: ${HOST_IP}
       server.port: 8080
       TZ: "Asia/Shanghai"
     links:
@@ -33,8 +32,8 @@ services:
       REGISTRY_SERVER: ${REGISTRY_SERVER}
       CONFIG_SERVER: ${CONFIG_SERVER}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      HOST_IP: ${HOST_IP}
       server.port: 8888
+      TZ: "Asia/Shanghai"
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
@@ -54,8 +53,8 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-      HOST_IP: ${HOST_IP}
       server.port: 8080
+      TZ: "Asia/Shanghai"
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
@@ -75,8 +74,8 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-      HOST_IP: ${HOST_IP}
       server.port: 8080
+      TZ: "Asia/Shanghai"
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
@@ -96,13 +95,13 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
-      HOST_IP: ${HOST_IP}
       ALIYUN_OSS_CLIENT_ENDPOINT: ${ALIYUN_OSS_CLIENT_ENDPOINT}
       ALIYUN_OSS_CLIENT_ACCESSKEYID: ${ALIYUN_OSS_CLIENT_ACCESSKEYID}
       ALIYUN_OSS_CLIENT_ACCESSKEYSECRET: ${ALIYUN_OSS_CLIENT_ACCESSKEYSECRET}
       ALIYUN_OSS_CLIENT_BUCKETNAME: ${ALIYUN_OSS_CLIENT_BUCKETNAME}
       ALIYUN_OSS_CLIENT_DIR: ${ALIYUN_OSS_CLIENT_DIR}
       server.port: 8080
+      TZ: "Asia/Shanghai"
     links:
       - g2rain-business-registry-server
       - g2rain-business-config-server  
@@ -117,6 +116,7 @@ services:
       - 8761:8761
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      TZ: "Asia/Shanghai"
     volumes:
       - /etc/localtime:/etc/localtime      
 
@@ -129,7 +129,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
       REGISTRY_SERVER: ${REGISTRY_SERVER} 
-      HOST_IP: ${HOST_IP}
+      TZ: "Asia/Shanghai"
     links:
       - g2rain-business-registry-server  
     volumes:
