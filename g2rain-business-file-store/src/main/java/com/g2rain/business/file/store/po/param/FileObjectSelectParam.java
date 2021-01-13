@@ -1,13 +1,17 @@
 package com.g2rain.business.file.store.po.param;
 
-import com.g2rain.business.common.domain.StoreBaseSelectParam;
+import com.g2rain.business.common.domain.BaseSelectParam;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-public class FileObjectSelectParam extends StoreBaseSelectParam {
+public class FileObjectSelectParam extends BaseSelectParam {
+	/**
+	 * 组织ID
+	 */
+	private String organId;
 	/**
 	 * 文件ID
 	 */

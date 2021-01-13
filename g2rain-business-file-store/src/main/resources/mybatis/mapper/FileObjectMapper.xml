@@ -13,8 +13,8 @@
 			<if test="fileId != null and fileId != ''">
 				and FILE_ID = #{fileId}
 			</if>
-			<if test="storeOrganId != null and storeOrganId != ''">
-				and STORE_ORGAN_ID = #{storeOrganId}
+			<if test="organId != null and organId != ''">
+				and ORGAN_ID = #{organId}
 			</if>
 			<if test="fileName != null and fileName != ''">
 				and FILE_NAME = #{fileName}
