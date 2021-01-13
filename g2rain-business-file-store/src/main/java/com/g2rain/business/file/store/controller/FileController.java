@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,7 @@ public class FileController {
 	@ResponseBody
 	@RequestMapping(value= "/upload", method = RequestMethod.POST)
 	public SpecificResult<List<FileObjectVo>> fileUpload(HttpServletRequest request,
-			@RequestParam MultipartFile[] files, @Param("organId") String organId) throws IOException {
+			@RequestParam MultipartFile[] files, @RequestParam("organId") String organId) throws IOException {
 		List<FileObjectVo> fileObjectVos = fileBo.saveFiles(request, files, organId);
 
 		SpecificResult<List<FileObjectVo>> result = new SpecificResult<>(BaseResult.SUCCESS);
