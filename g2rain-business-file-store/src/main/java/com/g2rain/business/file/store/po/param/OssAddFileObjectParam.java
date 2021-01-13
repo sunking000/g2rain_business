@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OssAddFileObjectParam {
+	private String organId;
 	/**
 	 * 文件名称
 	 */

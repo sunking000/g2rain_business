@@ -64,7 +64,7 @@ public class FileBo implements ApplicationListener<ContextRefreshedEvent> {
 					File storeFile = new File(file, storeFilePath);
 					files[i].transferTo(storeFile);
 					String fileType = FileTypeUtils.getFileType(storeFile);
-					FileObjectPo fileObjectPo = fileObjectBo.createFileObjectPo(originalFilename, fileType,
+					FileObjectPo fileObjectPo = fileObjectBo.createFileObjectPo(organId, originalFilename, fileType,
 							FileStoreTypeEnum.NATIVE.name(),
 							storeFilePath);
 					fileObjectPo.setStatus(FileObjectStatusEnum.SUCCESS.name());

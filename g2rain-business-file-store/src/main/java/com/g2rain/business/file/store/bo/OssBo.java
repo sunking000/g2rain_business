@@ -32,7 +32,8 @@ public class OssBo {
 	}
 
 	private FileObjectPo createFileObjectPo(OssAddFileObjectParam param) {
-		return fileObjectBo.createFileObjectPo(param.getFileName(), param.getFileType(), FileStoreTypeEnum.OSS.name(),
+		return fileObjectBo.createFileObjectPo(param.getOrganId(), param.getFileName(), param.getFileType(),
+				FileStoreTypeEnum.OSS.name(),
 				null);
 	}
 	

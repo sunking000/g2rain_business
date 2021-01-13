@@ -70,7 +70,8 @@ public class FileObjectBo {
 		return fileObjectVo;
 	}
 
-	public FileObjectPo createFileObjectPo(String fileOriginalFileName, String fileType, String storeType,
+	public FileObjectPo createFileObjectPo(String organId, String fileOriginalFileName, String fileType,
+			String storeType,
 			String storePath) {
 		FileObjectPo fileObjectPo = new FileObjectPo();
 		String fileId = sequenceBo.getDefaultSequenceId();
@@ -79,6 +80,7 @@ public class FileObjectBo {
 		fileObjectPo.setFileType(fileType);
 		fileObjectPo.setStorePath(storePath);
 		fileObjectPo.setStoreType(storeType);
+		fileObjectPo.setOrganId(organId);
 
 		return fileObjectPo;
 	}
