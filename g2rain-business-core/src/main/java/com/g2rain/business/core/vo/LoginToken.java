@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class LoginToken {
 	private String userId;
-	private String deviceId;
-	private String deviceName;
 	private String organType;
 	private String organId;
 	private String organName;

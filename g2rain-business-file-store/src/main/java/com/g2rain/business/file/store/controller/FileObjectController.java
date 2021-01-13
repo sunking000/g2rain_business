@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.g2rain.business.common.result.BaseResult;
 import com.g2rain.business.common.result.SpecificPageInfoResult;
 import com.g2rain.business.common.result.SpecificResult;
 import com.g2rain.business.file.store.bo.FileObjectBo;
@@ -25,7 +26,7 @@ public class FileObjectController {
 
 		SpecificPageInfoResult<FileObjectVo> specificPageInfoResult = fileObjectBo.list(param);
 		
-		SpecificResult<SpecificPageInfoResult<FileObjectVo>> specificResult = new SpecificResult<>();
+		SpecificResult<SpecificPageInfoResult<FileObjectVo>> specificResult = new SpecificResult<>(BaseResult.SUCCESS);
 		specificResult.setResultData(specificPageInfoResult);
 
 		return specificResult;
