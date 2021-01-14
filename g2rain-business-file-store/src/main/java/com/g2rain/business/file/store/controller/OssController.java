@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.g2rain.business.common.result.BaseResult;
@@ -20,7 +21,7 @@ public class OssController {
 	private OssBo ossBo;
 
 	@ResponseBody
-	@RequestMapping("sign_4_upload")
+	@RequestMapping(value = "sign_4_upload", method = RequestMethod.POST)
 	public SpecificResult<OssSignatureResult> signUploadObjectUrl(@RequestBody OssAddFileObjectParam param) {
 		OssSignatureResult signUploadObjectUrl = ossBo.signUploadObjectUrl(param);
 		SpecificResult<OssSignatureResult> result = new SpecificResult<>(BaseResult.SUCCESS);

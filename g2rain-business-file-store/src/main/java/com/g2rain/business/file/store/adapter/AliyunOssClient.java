@@ -18,6 +18,9 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.PolicyConditions;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AliyunOssClient {
 	@Value("${aliyun.oss.client.endpoint}")
@@ -79,6 +82,8 @@ public class AliyunOssClient {
 		jasonCallback.put("callbackUrl", uploadCallbackDomain + callbackUrl);
 		jasonCallback.put("callbackBody", "fileId=" + fileId + "&bucket=" + bucketName);
 		jasonCallback.put("callbackBodyType", "application/x-www-form-urlencoded");
+		log.debug("callback json:{}", jasonCallback.toJSONString());
+
 		String base64CallbackBody = BinaryUtil.toBase64String(jasonCallback.toString().getBytes());
 		respMap.put("callback", base64CallbackBody);
 		result.setCallback(base64CallbackBody);
