@@ -15,6 +15,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DataBufferUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.RequestPath;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
@@ -62,6 +64,12 @@ public class ModifyResponseBodyGlobalFilter implements GlobalFilter, Ordered, Ex
 			return chain.filter(exchange);
 		}
 
+		// 如果返回信息不是Application json则直接返回
+		HttpHeaders headers = exchange.getResponse().getHeaders();
+		if (MediaType.APPLICATION_JSON != headers.getContentType()) {
+			return chain.filter(exchange);
+		}
+
 		ServerHttpResponse response = exchange.getResponse();
 		DataBufferFactory bufferFactory = response.bufferFactory();
 
@@ -100,6 +108,7 @@ public class ModifyResponseBodyGlobalFilter implements GlobalFilter, Ordered, Ex
 				return super.writeWith(body);
 			}
 		};
+		
 
 		return chain.filter(exchange.mutate().response(decorator).build());
 	}
