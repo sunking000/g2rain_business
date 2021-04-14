@@ -1,6 +1,6 @@
 version: '3'
 services:  
-  g2rain-business-example:
+  example.${DOMAIN}:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-example:v0.0.1
     restart: always
     container_name: g2rain-business-example
@@ -8,20 +8,18 @@ services:
       - 8083:8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      REGISTRY_SERVER: ${REGISTRY_SERVER}
-      CONFIG_SERVER: ${CONFIG_SERVER}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       server.port: 8080
       TZ: "Asia/Shanghai"
     links:
-      - g2rain-business-registry-server
-      - g2rain-business-config-server
+      - registry-server.${DOMAIN}
+      - config-server..${DOMAIN}
     volumes:
       - /etc/localtime:/etc/localtime        
 
-  g2rain-business-gateway:
+  gateway.${DOMAIN}:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway:v0.0.7
     restart: always
     container_name: g2rain-business-gateway
@@ -29,18 +27,16 @@ services:
       - 8888:8888
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      REGISTRY_SERVER: ${REGISTRY_SERVER}
-      CONFIG_SERVER: ${CONFIG_SERVER}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       server.port: 8888
       TZ: "Asia/Shanghai"
     links:
-      - g2rain-business-registry-server
-      - g2rain-business-config-server  
+      - registry-server.${DOMAIN}
+      - config-server..${DOMAIN}  
     volumes:
       - /etc/localtime:/etc/localtime        
  
-  g2rain-business-gateway-shell:
+  gateway-shell.${DOMAIN}:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-gateway-shell:v0.0.2
     restart: always
     container_name: g2rain-business-gateway-shell
@@ -48,20 +44,18 @@ services:
       - 8082:8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      REGISTRY_SERVER: ${REGISTRY_SERVER}
-      CONFIG_SERVER: ${CONFIG_SERVER}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       server.port: 8080
       TZ: "Asia/Shanghai"
     links:
-      - g2rain-business-registry-server
-      - g2rain-business-config-server  
+      - registry-server.${DOMAIN}
+      - config-server..${DOMAIN}  
     volumes:
       - /etc/localtime:/etc/localtime        
 
-  g2rain-business-core:
+  core.${DOMAIN}:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-core:v0.0.4
     restart: always
     container_name: g2rain-business-core
@@ -69,20 +63,18 @@ services:
       - 8080:8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      REGISTRY_SERVER: ${REGISTRY_SERVER}
-      CONFIG_SERVER: ${CONFIG_SERVER}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       server.port: 8080
       TZ: "Asia/Shanghai"
     links:
-      - g2rain-business-registry-server
-      - g2rain-business-config-server  
+      - registry-server.${DOMAIN}
+      - config-server..${DOMAIN}  
     volumes:
       - /etc/localtime:/etc/localtime        
 
-  g2rain-business-file-store:
+  file-store.${DOMAIN}:
     image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-file-store:v0.0.1
     restart: always
     container_name: g2rain-business-file-store
@@ -90,8 +82,6 @@ services:
       - 8084:8080
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      REGISTRY_SERVER: ${REGISTRY_SERVER}
-      CONFIG_SERVER: ${CONFIG_SERVER}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
@@ -104,15 +94,15 @@ services:
       server.port: 8080
       TZ: "Asia/Shanghai"
     links:
-      - g2rain-business-registry-server
-      - g2rain-business-config-server  
+      - registry-server.${DOMAIN}
+      - config-server..${DOMAIN}  
     volumes:
       - /etc/localtime:/etc/localtime        
 
-  g2rain-business-registry-server:
-    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-registry-server:v0.0.1
+  registry-server.${DOMAIN}:
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/registry-server.${DOMAIN}:v0.0.1
     restart: always
-    container_name: g2rain-business-registry-server
+    container_name: registry-server.${DOMAIN}
     ports:
       - 8761:8761
     environment:
@@ -121,18 +111,17 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime      
 
-  g2rain-business-config-server:
-    image: registry.cn-huhehaote.aliyuncs.com/g2rain/g2rain-business-config-server:v0.0.1
+  config-server..${DOMAIN}:
+    image: registry.cn-huhehaote.aliyuncs.com/g2rain/config-server..${DOMAIN}:v0.0.1
     restart: always
-    container_name: g2rain-business-config-server
+    container_name: config-server..${DOMAIN}
     ports:
       - 8333:8333
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
-      REGISTRY_SERVER: ${REGISTRY_SERVER} 
       TZ: "Asia/Shanghai"
     links:
-      - g2rain-business-registry-server  
+      - registry-server.${DOMAIN}  
     volumes:
       - /etc/localtime:/etc/localtime        
 
